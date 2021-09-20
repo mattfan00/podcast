@@ -1,3 +1,86 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply font-sans;
+  line-height: 1.6;
+  /*letter-spacing: -.02em*/
+}
+
+h1 {
+  @apply text-3xl font-bold;
+}
+
+h2 {
+  @apply text-2xl font-bold;
+}
+
+h3 {
+  @apply text-xl font-bold;
+}
+
+h4 {
+  @apply text-lg font-bold;
+}
+
+p {
+  @apply my-5
+}
+
+a.color {
+  @apply underline text-blue-400
+}
+
+/*==============================================*/
+.code {
+  @apply
+    font-mono
+    px-1
+    py-0.5
+    text-sm
+    rounded-sm
+    bg-gray-100
+    text-red-500
+}
+
+.btn {
+  @apply
+    bg-gray-100
+    font-medium
+    px-3 py-1.5
+    text-sm
+    rounded
+    focus:outline-none
+    focus-visible:ring-2
+    hover:bg-gray-200
+    transition-colors
+}
+
+.btn-ghost {
+  @apply bg-white hover:bg-gray-100 !important
+}
+
+.btn-plain {
+  @apply bg-white hover:bg-white !important
+}
+
+.btn.disabled {
+  @apply opacity-50 cursor-default pointer-events-none;
+}
+
+.btn.active {
+  @apply bg-gray-200;
+}
+
+.btn-ghost.active {
+  @apply bg-gray-100 !important;
+}
+
+.btn-sm {
+  @apply px-2 py-1 !important
+}
+
+.input {
+  @apply border border-solid rounded-md px-3 py-1.5 focus:outline-none
+}
