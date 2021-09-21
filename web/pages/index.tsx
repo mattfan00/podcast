@@ -6,10 +6,7 @@ const Home: NextPage = () => {
     <div>
       hey
       <Button>hey</Button>
-      <ListGroup>
-        <ListGroup.Item>this is an item</ListGroup.Item>
-        <ListGroup.Item>another item</ListGroup.Item>
-      </ListGroup>
+      <Button variant="dark">hey</Button>
     </div>
   )
 }

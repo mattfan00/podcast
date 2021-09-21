@@ -46,36 +46,43 @@ a.color {
 
 .btn {
   @apply
-    bg-gray-100
     font-medium
     px-3 py-1.5
     text-sm
     rounded
     focus:outline-none
-    focus-visible:ring-2
-    hover:bg-gray-200
-    transition-colors
+    focus:ring
+    focus-visible:ring
+    transition
 }
 
-.btn-ghost {
-  @apply bg-white hover:bg-gray-100 !important
+.btn-dark {
+  @apply text-white bg-gray-900 hover:bg-gray-700 focus:ring-gray-400;
 }
+
+.btn-light {
+  @apply bg-gray-100 hover:bg-gray-200 focus:ring-gray-300;
+}
+
+/*
+.btn-ghost {
+  @apply bg-white;
+  @apply hover:bg-gray-200 !important;
+}
+
+.btn-ghost.active {
+  @apply bg-gray-100;
+}
+*/
 
 .btn-plain {
-  @apply bg-white hover:bg-white !important
+  @apply bg-white hover:bg-white;
 }
 
 .btn.disabled {
   @apply opacity-50 cursor-default pointer-events-none;
 }
 
-.btn.active {
-  @apply bg-gray-200;
-}
-
-.btn-ghost.active {
-  @apply bg-gray-100 !important;
-}
 
 .btn-sm {
   @apply px-2 py-1 !important

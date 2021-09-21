@@ -6,8 +6,8 @@ interface Props {
   children: React.ReactNode
   href?: string
   className?: string
-  variant?: string
-  size?: string
+  variant?: "dark" | "light" | "ghost" | "plain"
+  size?: "sm"
   active?: boolean
   disabled?: boolean
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
@@ -33,7 +33,7 @@ export const Button: React.FC<Props> = ({
 
   const style = classNames(
     "btn",
-    variant ? `btn-${variant}` : "",
+    variant ? `btn-${variant}` : "btn-light",
     size ? `btn-${size}` : "",
     { "active": active },
     { "disabled": disabled },
