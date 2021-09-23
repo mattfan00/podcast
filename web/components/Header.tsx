@@ -5,11 +5,11 @@ import { Avatar } from "../components/Avatar"
 
 export const Header: React.FC<{}> = () => {
   return (
-    <header className="w-screen px-8">
+    <header className="w-screen px-8 mb-4">
       <div className="flex items-center justify-between py-6 mx-auto max-w-7xl">
         <Logo className="w-32 mr-4" />
 
-        <div className="flex-1 max-w-md">
+        <div className="flex-1 max-w-sm">
           <input 
             className="bg-gray-100 rounded px-3 py-1.5 focus:outline-none text-sm w-full" 
             placeholder="Search"
