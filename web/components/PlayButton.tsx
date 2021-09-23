@@ -1,0 +1,32 @@
+import React from "react"
+import classNames from "classnames"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
+interface Props {
+  className?: string
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+}
+
+export const PlayButton: React.FC<Props> = ({
+  className,
+  onClick,
+}) => { 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (onClick) {
+      e.stopPropagation()
+      onClick(e)
+    }
+  }
+
+  return (
+    <button 
+      className={classNames(
+        "flex items-center justify-center w-9 h-9 rounded-full focus:outline-none focus-visible:ring focus-visible:ring-gray-200 border bg-white", 
+        className
+      )}
+      onClick={handleClick}
+    >
+      <FontAwesomeIcon size="xs" icon="play" fixedWidth />
+    </button>
+  )
+}

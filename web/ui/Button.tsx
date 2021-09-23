@@ -24,7 +24,7 @@ export const Button: React.FC<Props> = ({
   onClick,
   ...rest
 }) => {
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+ const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (onClick) {
       e.stopPropagation()
       onClick(e)
@@ -35,8 +35,10 @@ export const Button: React.FC<Props> = ({
     "btn",
     variant ? `btn-${variant}` : "btn-light",
     size ? `btn-${size}` : "",
-    { "active": active },
-    { "disabled": disabled },
+    { 
+      "active": active,
+      "disabled": disabled,
+    },
     className,
   )
 

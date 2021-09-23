@@ -83,7 +83,6 @@ a.color {
   @apply opacity-50 cursor-default pointer-events-none;
 }
 
-
 .btn-sm {
   @apply px-2 py-1 !important
 }
