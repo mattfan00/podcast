@@ -35,7 +35,7 @@ export const ProfilePage: React.FC<{}> = () => {
       {episodes.map(episode => (
       <div className="px-4 py-4 mb-4 -mx-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
         <h5>{episode.title}</h5>
-        <div className="mt-1">{episode.description}</div>
+        <div>{episode.description}</div>
         <div className="mt-4 text-sm">Matthew Fan</div>
         <div className="flex items-center mt-2">
           <PlayButton className="mr-3" />
