@@ -15,7 +15,7 @@ export const ContentWrapper: React.FC<Props> = ({
   }
 
   return (
-    <div className="w-screen px-8">
+    <div className="w-full px-8">
       <div className={classNames("mx-auto", sizing[size])}>
         {children}
       </div>

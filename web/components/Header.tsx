@@ -5,7 +5,7 @@ import { Avatar } from "../components/Avatar"
 
 export const Header: React.FC<{}> = () => {
   return (
-    <header className="w-screen px-8 mb-4">
+    <header className="w-full px-8 mb-4">
       <div className="flex items-center justify-between py-6 mx-auto max-w-7xl">
         <Logo className="w-32 mr-4" />
 

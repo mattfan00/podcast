@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 body {
-  @apply font-sans;
-  line-height: 1.6;
+  @apply font-sans text-sm;
+  line-height: 1.5;
   /*letter-spacing: -.02em*/
 }
 
@@ -22,6 +22,10 @@ h3 {
 
 h4 {
   @apply text-lg font-bold;
+}
+
+h5 {
+  @apply text-base font-bold; 
 }
 
 p {

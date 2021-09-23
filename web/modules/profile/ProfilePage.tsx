@@ -27,22 +27,23 @@ export const ProfilePage: React.FC<{}> = () => {
     <>
       <ProfileHeader />
 
-      <div className="flex items-center justify-between mb-8">
-        <h2>Episodes</h2>
+      <div className="flex items-center justify-between mb-3">
+        <h3>Episodes</h3>
         <Button>Newest to Oldest</Button>
       </div>
 
       {episodes.map(episode => (
-        <div className="px-5 py-4 mb-4 -mx-5 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
-          <h4>{episode.title}</h4>
-          <div>{episode.description}</div>
-          <div className="mt-4 text-sm">Matthew Fan</div>
-          <div className="flex items-center mt-2">
-            <PlayButton className="mr-3" />
-            <div className="text-sm text-gray-400">Sep 21, 2021 · 33 min</div>
-          </div>
+      <div className="px-4 py-4 mb-4 -mx-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+        <h5>{episode.title}</h5>
+        <div className="mt-1">{episode.description}</div>
+        <div className="mt-4 text-sm">Matthew Fan</div>
+        <div className="flex items-center mt-2">
+          <PlayButton className="mr-3" />
+          <div className="text-sm text-gray-400">Sep 21, 2021 · 33 min</div>
         </div>
+      </div>
       ))}
+
     </>
   )
 }

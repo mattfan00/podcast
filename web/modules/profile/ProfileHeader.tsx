@@ -6,7 +6,7 @@ export const ProfileHeader: React.FC<{}> = () => {
     <div className="mb-12 border rounded-xl">
       <div 
         className="relative w-full overflow-hidden rounded-t-xl" 
-        style={{ paddingBottom: "27.5%" }}
+        style={{ paddingBottom: "30%" }}
       >
         <img className="absolute object-cover w-full h-full" src="bg.png" />
       </div>
@@ -15,7 +15,7 @@ export const ProfileHeader: React.FC<{}> = () => {
         <div className="flex items-center mb-4">
           <Avatar size="lg" className="mr-5" />
           <div className="flex flex-col">
-            <h2>Matthew Fan</h2>
+            <h3>Matthew Fan</h3>
             <div className="text-gray-400">36 episodes</div>
           </div>
         </div>
