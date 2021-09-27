@@ -7,8 +7,8 @@ import {
 
 @Entity()
 export class User extends BaseEntity{
-  @PrimaryGeneratedColumn()
-  id: number
+  @PrimaryGeneratedColumn("uuid")
+  id: string
 
   @Column()
   name: string
@@ -28,6 +28,6 @@ export class User extends BaseEntity{
   @Column()
   password: string
 
-  @Column("timestamptz", { nullable: true })
+  @Column("timestamptz", { default: () => "CURRENT_TIMESTAMP" })
   created: Date
 }
