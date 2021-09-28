@@ -1,4 +1,5 @@
 import * as userStore from "./store/user"
+import { hash, compare } from "../../utils/password"
 
 export const login = async (email: string, password: string) => {
   const foundUser = await userStore.findByEmail(email)
@@ -6,7 +7,8 @@ export const login = async (email: string, password: string) => {
     throw new Error("invalid credentials")
   }
 
-  if (password != foundUser.password) {
+  const passwordsMatch = await compare(password, foundUser.password)
+  if (!passwordsMatch) {
     throw new Error("invalid credentials")
   }
 
@@ -22,7 +24,8 @@ export const register = async (email: string, name: string, username: string, pa
     throw new Error("username in use") 
   }
 
-  const newUser = await userStore.create(email, name, username, password) 
+  const hashedPassword = await hash(password)
+  const newUser = await userStore.create(email, name, username, hashedPassword) 
 
   return newUser
 }
