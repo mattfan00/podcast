@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 import jwt from "jsonwebtoken"
-import { UserPayload } from "../../types/user"
+import { CurrentUser } from "../../types/user"
+import { UnauthorizedError } from "../../utils/errors"
 
 export const isAuth = (
   req: Request,
@@ -9,11 +10,15 @@ export const isAuth = (
 ) => {
   const accessToken = req.cookies["at"]
   if (!accessToken) {
-    throw new Error("token not available")
+    throw new UnauthorizedError("Token invalid")
   }
 
-  const payload = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET!) as UserPayload
-  req.currentUser = payload
+  try {
+    const payload = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET!) as CurrentUser
+    req.currentUser = payload
+  } catch (_) {
+    throw new UnauthorizedError("Token invalid")
+  }
 
   next()
 }

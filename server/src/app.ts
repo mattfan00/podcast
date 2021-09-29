@@ -7,12 +7,12 @@ import userRouter from "./api/user/routes"
 import authRouter from "./api/auth/routes"
 import { errorHandler } from "./utils/middleware/errorHandler"
 
-import { UserPayload } from "./types/user"
+import { CurrentUser } from "./types/user"
 
 declare global {
   namespace Express {
     interface Request {
-      currentUser?: UserPayload
+      currentUser?: CurrentUser
     }
   }
 }

@@ -1,6 +1,7 @@
 import * as userStore from "./store/user"
 import { hash, compare } from "../../utils/password"
 import { BadRequestError, UnauthorizedError } from "../../utils/errors"
+import { CurrentUser } from "../../types/user"
 import jwt from "jsonwebtoken"
 
 export const login = async (email: string, password: string) => {
@@ -44,4 +45,10 @@ export const register = async (email: string, name: string, username: string, pa
     user: newUser,
     accessToken
   }
+}
+
+export const me = async (currentUser: CurrentUser) => {
+  const foundUser = await userStore.findById(currentUser.id)
+
+  return foundUser
 }

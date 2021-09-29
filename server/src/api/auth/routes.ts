@@ -29,4 +29,9 @@ router.post("/auth/register", async (req, res) => {
   res.json(user)
 })
 
+router.get("/auth/me", async (req, res) => {
+  const user = req.currentUser ? await authController.me(req.currentUser) : null
+  res.json(user)
+}) 
+
 export default router
