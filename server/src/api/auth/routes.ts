@@ -5,16 +5,28 @@ const router = express.Router()
 
 router.post("/auth/login", async (req, res) => {
   const { email, password } = req.body
-  const foundUser = await authController.login(email, password) 
+  const { user, accessToken } = await authController.login(email, password) 
 
-  res.json(foundUser)
+  res.cookie("at", accessToken, {
+    signed: false,
+    httpOnly: true,
+    secure: false,
+  })
+
+  res.json(user)
 })
 
 router.post("/auth/register", async (req, res) => {
   const { email, name, username, password } = req.body
-  const newUser = await authController.register(email, name, username, password) 
+  const { user, accessToken } = await authController.register(email, name, username, password) 
 
-  res.json(newUser)
+  res.cookie("at", accessToken, {
+    signed: false,
+    httpOnly: true,
+    secure: false,
+  })
+
+  res.json(user)
 })
 
 export default router

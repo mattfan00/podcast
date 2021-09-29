@@ -22,6 +22,9 @@ export class User extends BaseEntity{
   @Column("text", { nullable: true })
   avatar: string
 
+  @Column("text", { nullable: true })
+  banner: string
+
   @Column("text", { unique: true })
   email: string
 
