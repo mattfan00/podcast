@@ -55,7 +55,7 @@ a.color {
     text-sm
     rounded
     focus:outline-none
-    focus:ring
+    /*focus:ring*/
     focus-visible:ring
     transition
 }
