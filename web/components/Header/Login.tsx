@@ -1,7 +1,9 @@
 import React, { useState } from "react"
-import { Modal, Button, Input } from "../../ui"
+import { Modal, Button } from "../../ui"
+import { FormField } from "../../components/FormField"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { Dialog } from "@headlessui/react"
+import axios from "axios"
 
 export const Login: React.FC<{}> = ({
 })  => {
@@ -13,7 +15,12 @@ export const Login: React.FC<{}> = ({
   const { register, handleSubmit, watch, formState: { errors } } = useForm<LoginFields>()
   const [showModal, setShowModal] = useState(false)
 
-  const onSubmit: SubmitHandler<LoginFields> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<LoginFields> = async (data) => {
+    const result = await axios.post("http://localhost:8080/v1/auth/login", data)
+    console.log(result)
+  }
+
+  const handleClose = () => setShowModal(false)
 
   return (
     <>
@@ -24,11 +31,12 @@ export const Login: React.FC<{}> = ({
       >Log in</Button>
 
       <Modal
+        size="sm"
         open={showModal}
-        onClose={() => setShowModal(false)}
+        onClose={handleClose}
       >
         <Modal.Title>
-          Login
+          Log in
         </Modal.Title>
 
         <Modal.Description>
@@ -36,10 +44,29 @@ export const Login: React.FC<{}> = ({
         </Modal.Description>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Input className="w-full" {...register("email")} />
-          <Input className="w-full" {...register("password")} />
+          <FormField 
+            className="mb-3"
+            label="Email"
+            type="email"
+            fullWidth
+            {...register("email")}
+          />
 
-          <Button type="submit">Submit</Button>
+          <FormField 
+            label="Password"
+            type="password"
+            fullWidth
+            {...register("password")}
+          />
+
+          <div className="flex justify-end mt-6">
+            <Button 
+              className="mr-2"
+              variant="plain" 
+              onClick={handleClose}
+            >Cancel</Button>
+            <Button type="submit">Submit</Button>
+          </div>
         </form>
       </Modal>
     </>

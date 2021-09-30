@@ -56,7 +56,7 @@ a.color {
     rounded
     focus:outline-none
     /*focus:ring*/
-    focus-visible:ring
+    focus-visible:ring-2
     transition
 }
 
@@ -80,7 +80,7 @@ a.color {
 */
 
 .btn-plain {
-  @apply bg-white hover:bg-white;
+  @apply bg-white hover:bg-white focus:ring-gray-300;
 }
 
 .btn.disabled {
@@ -99,8 +99,8 @@ a.color {
     px-3 
     py-1.5 
     focus:outline-none
-    focus:ring
-    focus-visible:ring
+    focus:ring-2
+    focus-visible:ring-2
     focus:ring-gray-300
     transition
 }

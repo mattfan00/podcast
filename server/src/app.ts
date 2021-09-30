@@ -27,7 +27,7 @@ app.use(cookieParser())
 router.use(userRouter)
 router.use(authRouter)
 
-app.use("/api/v1", router) 
+app.use("/v1", router) 
 
 app.use(errorHandler)
 

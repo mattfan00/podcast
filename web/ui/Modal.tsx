@@ -65,7 +65,7 @@ const ModalComponent: React.FC<ModalProps> = ({
   }
 
   const modalStyle = classNames(
-    "inline-block w-full p-6 my-8 overflow-hidden text-left align-middle bg-white shadow-xl transform rounded-xl",
+    "inline-block w-full px-8 py-6 my-8 overflow-hidden text-left align-middle bg-white shadow-xl transform rounded-xl",
     sizeMappings[size],
     className
   )
