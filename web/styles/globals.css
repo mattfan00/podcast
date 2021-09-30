@@ -92,5 +92,15 @@ a.color {
 }
 
 .input {
-  @apply border border-solid rounded-md px-3 py-1.5 focus:outline-none
+  @apply 
+    border 
+    border-solid 
+    rounded-md 
+    px-3 
+    py-1.5 
+    focus:outline-none
+    focus:ring
+    focus-visible:ring
+    focus:ring-gray-300
+    transition
 }

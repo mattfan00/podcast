@@ -16,10 +16,29 @@ export const ModalTitle: React.FC<ModalTitleProps> = ({
   return (
     <Dialog.Title
       as={tag}
-      className={classNames("mb-2", className)}
+      className={classNames("mb-5", className)}
     >
       {children}
     </Dialog.Title>
+  )
+}
+
+interface ModalDescriptionProps {
+  children: React.ReactNode
+  className?: string
+}
+
+export const ModalDescription: React.FC<ModalDescriptionProps> = ({ 
+  children,
+  className
+}) => {
+  return (
+    <Dialog.Description
+      as="div"
+      className={classNames("-mt-5 mb-5 text-gray-500", className)}
+    >
+      {children}
+    </Dialog.Description>
   )
 }
 
@@ -35,7 +54,7 @@ const ModalComponent: React.FC<ModalProps> = ({
   children,
   open,
   onClose,
-  size = "lg",
+  size = "md",
   className
 }) => {
   const sizeMappings={
@@ -97,4 +116,5 @@ const ModalComponent: React.FC<ModalProps> = ({
 
 export const Modal = Object.assign(ModalComponent, {
   Title: ModalTitle,
+  Description: ModalDescription,
 })

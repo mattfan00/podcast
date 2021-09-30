@@ -5,8 +5,8 @@ import classNames from "classnames"
 interface Props {
   children: React.ReactNode
   href?: string
-  className?: string
-  variant?: "dark" | "light" | "ghost" | "plain"
+  className: string
+  variant: "light" | "dark" | "plain",
   size?: "sm"
   active?: boolean
   disabled?: boolean
@@ -17,7 +17,7 @@ export const Button: React.FC<Props> = ({
   children,
   href,
   className,
-  variant,
+  variant = "light",
   size,
   active,
   disabled,
@@ -33,7 +33,7 @@ export const Button: React.FC<Props> = ({
 
   const style = classNames(
     "btn",
-    variant ? `btn-${variant}` : "btn-light",
+    `btn-${variant}`,
     size ? `btn-${size}` : "",
     { 
       "active": active,

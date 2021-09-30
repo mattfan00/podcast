@@ -1,12 +1,11 @@
-import React, { useState } from "react"
+import React from "react"
 import { Logo } from "../../icons/Logo"
 import { Button } from "../../ui"
 import { Avatar } from "../../components/Avatar"
-import { LoginModal } from "./LoginModal"
+import { Login } from "./Login"
+import { Register } from "./Register"
 
 export const Header: React.FC<{}> = () => {
-  const [showModal, setShowModal] = useState(false)
-
   return (
     <header className="w-full px-8 mb-4">
       <div className="flex items-center justify-between py-6 mx-auto max-w-7xl">
@@ -26,15 +25,8 @@ export const Header: React.FC<{}> = () => {
           <Button variant="dark">Upload</Button>
           <Avatar className="ml-4" />
             */}
-          <Button 
-            variant="dark"
-            onClick={() => setShowModal(true)}
-          >Login</Button>
-
-          <LoginModal 
-            open={showModal}
-            onClose={() => setShowModal(false)}
-          />
+          <Login />
+          <Register />
         </div>
       </div>
     </header>
