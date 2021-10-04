@@ -1,7 +1,5 @@
 import React from "react"
-import { Logo } from "../../icons/Logo"
-import { Button } from "../../ui"
-import { Avatar } from "../../components/Avatar"
+import { Logo } from "../../components/icons/Logo"
 import { Login } from "./Login"
 import { Register } from "./Register"
 

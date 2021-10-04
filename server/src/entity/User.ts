@@ -17,7 +17,7 @@ export class User extends BaseEntity{
   username: string
 
   @Column("text", { nullable: true })
-  description: string
+  bio: string
 
   @Column("text", { nullable: true })
   avatar: string

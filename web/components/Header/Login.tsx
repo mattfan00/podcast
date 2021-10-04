@@ -2,7 +2,8 @@ import React, { useState } from "react"
 import { Modal, Button } from "../../ui"
 import { FormField } from "../../components/FormField"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { Dialog } from "@headlessui/react"
+import { useAuth } from "../../hooks/useAuth"
+import { User } from "../../types/user"
 import axios from "axios"
 
 export const Login: React.FC<{}> = ({
@@ -14,10 +15,11 @@ export const Login: React.FC<{}> = ({
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm<LoginFields>()
   const [showModal, setShowModal] = useState(false)
+  const { setUser } = useAuth()
 
   const onSubmit: SubmitHandler<LoginFields> = async (data) => {
-    const result = await axios.post("http://localhost:8080/v1/auth/login", data)
-    console.log(result)
+    const result = await axios.post<User>("http://localhost:8080/v1/auth/login", data)
+    setUser(result.data)
   }
 
   const handleClose = () => setShowModal(false)
@@ -35,13 +37,9 @@ export const Login: React.FC<{}> = ({
         open={showModal}
         onClose={handleClose}
       >
-        <Modal.Title>
-          Log in
-        </Modal.Title>
+        <Modal.Title>Log in</Modal.Title>
 
-        <Modal.Description>
-          Welcome back to podcast!
-        </Modal.Description>
+        <Modal.Description>Welcome back to podcast!</Modal.Description>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormField 
