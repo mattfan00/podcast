@@ -17,17 +17,22 @@ declare global {
   }
 }
 
-const app = express(),
-      router = express.Router()
+const app = express()
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  //origin: true,
+  credentials: true
+}))
 app.use(cookieParser())
 
-router.use(userRouter)
-router.use(authRouter)
+//const router = express.Router()
 
-app.use("/v1", router) 
+//router.use(userRouter)
+//router.use(authRouter)
+
+app.use("/v1", authRouter) 
 
 app.use(errorHandler)
 

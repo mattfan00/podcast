@@ -18,7 +18,9 @@ export const Login: React.FC<{}> = ({
   const { setUser } = useAuth()
 
   const onSubmit: SubmitHandler<LoginFields> = async (data) => {
-    const result = await axios.post<User>("http://localhost:8080/v1/auth/login", data)
+    const result = await axios.post("http://localhost:8080/v1/auth/login", data, {
+      withCredentials: true
+    })
     setUser(result.data)
   }
 
