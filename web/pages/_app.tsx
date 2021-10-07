@@ -1,14 +1,18 @@
 import { AppProps } from "next/app"
 import { AuthProvider } from "../contexts/Auth"
+import { QueryClientProvider } from "react-query"
+import { queryClient } from "../lib/query"
 
 import "../styles/globals.css"
 import "../fontawesome"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
+    </QueryClientProvider>
   )
 }
 export default MyApp

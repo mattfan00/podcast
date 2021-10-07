@@ -1,13 +1,15 @@
-import React, { useState, useEffect, createContext } from "react"
+import React, { useState, createContext } from "react"
 import { User } from "../types/user"
-import axios from "axios"
+import { useQuery } from "react-query"
 
 export const AuthContext = createContext<{
   user: User | null
   setUser: (u: User) => void
+  isLoading: boolean
 }>({
   user: null,
   setUser: () => {},
+  isLoading: true
 })
 
 interface Props {
@@ -18,25 +20,19 @@ export const AuthProvider: React.FC<Props> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | null>(null)
-
-  /*
-  useEffect(() => {
-    const getUser = async () => {
-      const result = await axios.get("localhost:8080/v1/auth/me")
-
-      setUser(result.data)
+  
+  const { isLoading } = useQuery(`/auth/me`, {
+    onSuccess: (data) => {
+      console.log(data)
     }
-
-    getUser()
-  })
-   */
+  }) 
 
   return (
     <AuthContext.Provider
       value={{
         user,
         setUser,
-        //isLoading
+        isLoading
       }}
     >
       {children}

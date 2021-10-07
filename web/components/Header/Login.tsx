@@ -3,8 +3,8 @@ import { Modal, Button } from "../../ui"
 import { FormField } from "../../components/FormField"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useAuth } from "../../hooks/useAuth"
-import { User } from "../../types/user"
-import axios from "axios"
+import { useMutation } from "react-query"
+import { clientQuery } from "../../lib/axios"
 
 export const Login: React.FC<{}> = ({
 })  => {
@@ -17,11 +17,15 @@ export const Login: React.FC<{}> = ({
   const [showModal, setShowModal] = useState(false)
   const { setUser } = useAuth()
 
+  const loginMutation = useMutation((fields: LoginFields) => clientQuery.post("/auth/login", fields))
+
   const onSubmit: SubmitHandler<LoginFields> = async (data) => {
-    const result = await axios.post("http://localhost:8080/v1/auth/login", data, {
-      withCredentials: true
-    })
-    setUser(result.data)
+    try {
+      const result = await loginMutation.mutateAsync(data)
+      setUser(result.data)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   const handleClose = () => setShowModal(false)
