@@ -2,6 +2,9 @@ import React, { useState } from "react"
 import { Modal, Button } from "../../ui"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { FormField } from "../../components/FormField"
+import { useAuth } from "../../hooks/useAuth"
+import { useMutation } from "react-query"
+import { clientQuery } from "../../lib/axios"
 
 export const Register: React.FC<{}> = ({
 })  => {
@@ -14,8 +17,20 @@ export const Register: React.FC<{}> = ({
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm<RegisterFields>()
   const [showModal, setShowModal] = useState(false)
+  const { setUser } = useAuth()
 
-  const onSubmit: SubmitHandler<RegisterFields> = (data) => console.log(data)
+  const registerMutation = useMutation((fields: RegisterFields) => 
+    clientQuery.post("/auth/register", fields)
+  )
+
+  const onSubmit: SubmitHandler<RegisterFields> = async (data) => {
+    try {
+      const result = await registerMutation.mutateAsync(data)
+      setUser(result.data)
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   const handleClose = () => setShowModal(false)
 
