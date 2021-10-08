@@ -23,7 +23,7 @@ export const AuthProvider: React.FC<Props> = ({
   
   const { isLoading } = useQuery(`/auth/me`, {
     onSuccess: (data) => {
-      console.log(data)
+      setUser(data as User)
     }
   }) 
 

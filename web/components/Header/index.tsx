@@ -1,9 +1,14 @@
 import React from "react"
+import { Button } from "../../ui"
 import { Logo } from "../../components/icons/Logo"
+import { Avatar } from "../../components/Avatar"
 import { Login } from "./Login"
 import { Register } from "./Register"
+import { useAuth } from "../../hooks/useAuth"
 
 export const Header: React.FC<{}> = () => {
+  const { user, isLoading } = useAuth()
+
   return (
     <header className="w-full px-8 mb-4">
       <div className="flex items-center justify-between py-6 mx-auto max-w-7xl">
@@ -19,12 +24,19 @@ export const Header: React.FC<{}> = () => {
         </div>
 
         <div className="flex items-center justify-end flex-1 ml-4">
-          {/*
-          <Button variant="dark">Upload</Button>
-          <Avatar className="ml-4" />
-            */}
-          <Login />
-          <Register />
+          {!isLoading ? (
+            user ? (
+              <>
+                <Button variant="dark">Upload</Button>
+                <Avatar className="ml-4" />
+              </>
+            ) : (
+              <>
+                <Login />
+                <Register />
+              </>
+            )
+          ) : ""}
         </div>
       </div>
     </header>
