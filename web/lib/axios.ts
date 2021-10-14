@@ -5,3 +5,8 @@ export const clientQuery = axios.create({
   baseURL: BASE_URL,
   withCredentials: true
 })
+
+export const serverQuery = axios.create({
+  baseURL: BASE_URL,
+  withCredentials: true
+})

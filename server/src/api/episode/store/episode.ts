@@ -1,14 +1,22 @@
 import { Episode } from "../../../entity/Episode"
 
 const findById = async (id: string) => {
-  return await Episode.findOne(id)
+  return await Episode.findOne(id, { 
+    relations: ["user"]
+  })
 }
 
-const create = async (title: string, description: string, lengthSeconds: number) => {
+const create = async (
+  title: string, 
+  description: string, 
+  lengthSeconds: number,
+  userId: string
+) => {
   const newEpisode = Episode.create({ 
     title,
     description,
-    length_seconds: lengthSeconds
+    lengthSeconds,
+    userId
   })
   await newEpisode.save()
 

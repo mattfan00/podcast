@@ -2,9 +2,12 @@ import React from "react"
 import { ProfileHeader } from "./ProfileHeader"
 import { Button } from "../../ui"
 import { PlayButton } from "../../components/PlayButton"
-import { Avatar } from "../../components/Avatar"
 
-export const ProfilePage: React.FC<{}> = () => {
+interface Props {
+  profile: any
+}
+
+export const ProfilePage: React.FC<Props> = ({ profile }) => {
   const episodes = [
     {
       "title": "This is my life",
@@ -23,6 +26,8 @@ export const ProfilePage: React.FC<{}> = () => {
       "description": "This is the last podcast in the list of my example podcasts"
     },
   ]
+
+  console.log(profile)
 
   return (
     <>

@@ -1,6 +1,7 @@
 import express from "express"
 import { authController } from "./controller"
 import { isAuth } from "../../utils/middleware/isAuth"
+import { requireAuth } from "../../utils/middleware/requireAuth"
 
 const router = express.Router()
 
@@ -30,7 +31,7 @@ router.post("/auth/register", async (req, res) => {
   res.json(user)
 })
 
-router.get("/auth/me", isAuth, async (req, res) => {
+router.get("/auth/me", isAuth, requireAuth, async (req, res) => {
   const user = req.currentUser ? await authController.me(req.currentUser) : null
   res.json(user)
 }) 

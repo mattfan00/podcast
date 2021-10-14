@@ -21,7 +21,7 @@ export const PlayButton: React.FC<Props> = ({
   return (
     <button 
       className={classNames(
-        "flex items-center justify-center w-8 h-8 rounded-full border bg-white focus:outline-none focus-visible:ring focus-visible:ring-gray-200 hover:text-gray-500 transition-colors",
+        "flex items-center justify-center w-8 h-8 rounded-full border bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 hover:text-gray-500 transition-colors",
         className
       )}
       onClick={handleClick}

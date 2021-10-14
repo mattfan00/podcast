@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode
   href?: string
   className?: string
-  variant: "light" | "dark" | "plain",
+  variant?: "light" | "dark" | "plain",
   size?: "sm"
   active?: boolean
   disabled?: boolean

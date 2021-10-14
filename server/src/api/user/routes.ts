@@ -3,8 +3,9 @@ import { userController } from "./controller"
 
 const router = express.Router()
 
-router.get("/user/:id", async (req, res) => {
-  const foundUser = await userController.view(req.params.id) 
+router.get("/user/:username", async (req, res) => {
+  const { username } = req.params
+  const foundUser = await userController.view(username) 
 
   res.send(foundUser)
 })

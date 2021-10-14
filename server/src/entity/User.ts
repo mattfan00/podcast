@@ -1,9 +1,11 @@
 import { 
   Entity, 
   Column, 
+  OneToMany,
   PrimaryGeneratedColumn,  
   BaseEntity
 } from "typeorm";
+import { Episode } from "./Episode"
 
 @Entity()
 export class User extends BaseEntity{
@@ -30,6 +32,9 @@ export class User extends BaseEntity{
 
   @Column()
   password: string
+
+  @OneToMany(() => Episode, episode => episode.user)
+  episodes: Episode[]
 
   @Column("timestamptz", { default: () => "CURRENT_TIMESTAMP" })
   created: Date

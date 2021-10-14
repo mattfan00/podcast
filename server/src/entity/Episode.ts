@@ -1,9 +1,11 @@
 import { 
   Entity, 
   Column, 
+  ManyToOne,
   PrimaryGeneratedColumn,  
   BaseEntity
-} from "typeorm";
+} from "typeorm"
+import { User } from "./User"
 
 @Entity()
 export class Episode extends BaseEntity{
@@ -17,7 +19,13 @@ export class Episode extends BaseEntity{
   description: string
 
   @Column()
-  length_seconds: number
+  lengthSeconds: number
+
+  @Column("uuid")
+  userId: string
+
+  @ManyToOne(() => User, user => user.episodes)
+  user: User
 
   @Column("timestamptz", { default: () => "CURRENT_TIMESTAMP" })
   created: Date

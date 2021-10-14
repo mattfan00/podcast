@@ -1,9 +1,11 @@
 import { User } from "../../../entity/User"
 
-const findById = async (id: string) => {
-  return await User.findOne(id)
+const findByUsername = async (username: string) => {
+  return await User.findOne({ username }, {
+    relations: ["episodes"]
+  })
 }
 
 export const userStore = {
-  findById
+  findByUsername
 }
