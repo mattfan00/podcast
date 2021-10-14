@@ -17,7 +17,9 @@ export const Login: React.FC<{}> = ({
   const [showModal, setShowModal] = useState(false)
   const { setUser } = useAuth()
 
-  const loginMutation = useMutation((fields: LoginFields) => clientQuery.post("/auth/login", fields))
+  const loginMutation = useMutation((fields: LoginFields) => 
+    clientQuery.post("/auth/login", fields)
+  )
 
   const onSubmit: SubmitHandler<LoginFields> = async (data) => {
     try {

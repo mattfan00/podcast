@@ -1,5 +1,5 @@
 import express from "express"
-import * as authController from "./controller"
+import { authController } from "./controller"
 import { isAuth } from "../../utils/middleware/isAuth"
 
 const router = express.Router()
@@ -35,4 +35,4 @@ router.get("/auth/me", isAuth, async (req, res) => {
   res.json(user)
 }) 
 
-export default router
+export { router as authRouter }

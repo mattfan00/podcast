@@ -1,10 +1,10 @@
-import * as userStore from "./store/user"
+import { userStore } from "./store/user"
 import { hash, compare } from "../../utils/password"
 import { BadRequestError, UnauthorizedError } from "../../utils/errors"
 import { CurrentUser } from "../../types/user"
 import jwt from "jsonwebtoken"
 
-export const login = async (email: string, password: string) => {
+const login = async (email: string, password: string) => {
   const foundUser = await userStore.findByEmail(email)
   if (!foundUser) {
     throw new UnauthorizedError("Invalid credentials")
@@ -25,7 +25,7 @@ export const login = async (email: string, password: string) => {
   }
 }
 
-export const register = async (email: string, name: string, username: string, password: string) => {
+const register = async (email: string, name: string, username: string, password: string) => {
   if (await userStore.findByEmail(email)) {
     throw new BadRequestError("Email already in use") 
   }
@@ -47,8 +47,14 @@ export const register = async (email: string, name: string, username: string, pa
   }
 }
 
-export const me = async (currentUser: CurrentUser) => {
+const me = async (currentUser: CurrentUser) => {
   const foundUser = await userStore.findById(currentUser.id)
 
   return foundUser
+}
+
+export const authController = {
+  login,
+  register,
+  me
 }

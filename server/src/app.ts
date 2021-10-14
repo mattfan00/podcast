@@ -3,8 +3,8 @@ import "express-async-errors"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 
-import userRouter from "./api/user/routes"
-import authRouter from "./api/auth/routes"
+import { userRouter } from "./api/user/routes"
+import { authRouter } from "./api/auth/routes"
 import { errorHandler } from "./utils/middleware/errorHandler"
 
 import { CurrentUser } from "./types/user"
@@ -27,10 +27,9 @@ app.use(cors({
 }))
 app.use(cookieParser())
 
-//const router = express.Router()
-
-//router.use(userRouter)
-//router.use(authRouter)
+const router = express.Router()
+router.use(userRouter)
+router.use(authRouter)
 
 app.use("/v1", authRouter) 
 

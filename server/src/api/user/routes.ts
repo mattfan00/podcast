@@ -1,5 +1,5 @@
 import express from "express"
-import * as userController from "./controller"
+import { userController } from "./controller"
 
 const router = express.Router()
 
@@ -9,4 +9,4 @@ router.get("/user/:id", async (req, res) => {
   res.send(foundUser)
 })
 
-export default router
+export { router as userRouter }
