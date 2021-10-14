@@ -13,7 +13,12 @@ const findByUsername = async (username: string) => {
 }
 
 const create = async (email: string, name: string, username: string, password: string) => {
-  const newUser = User.create({ email, name, username, password })
+  const newUser = User.create({ 
+    email, 
+    name, 
+    username, 
+    password 
+  })
   await newUser.save()
 
   return newUser

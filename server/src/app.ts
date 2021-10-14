@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser"
 
 import { userRouter } from "./api/user/routes"
 import { authRouter } from "./api/auth/routes"
+import { episodeRouter } from "./api/episode/routes"
 import { errorHandler } from "./utils/middleware/errorHandler"
 
 import { CurrentUser } from "./types/user"
@@ -30,8 +31,9 @@ app.use(cookieParser())
 const router = express.Router()
 router.use(userRouter)
 router.use(authRouter)
+router.use(episodeRouter)
 
-app.use("/v1", authRouter) 
+app.use("/v1", router) 
 
 app.use(errorHandler)
 
