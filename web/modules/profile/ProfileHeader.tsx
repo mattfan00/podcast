@@ -1,7 +1,12 @@
 import React from "react"
 import { Avatar } from "../../components/Avatar"
+import { User } from "../../types/user"
 
-export const ProfileHeader: React.FC<{}> = () => {
+interface Props {
+  profile: User
+}
+
+export const ProfileHeader: React.FC<Props> = ({ profile }) => {
   return (
     <div className="mb-10 border rounded-xl">
       <div 
@@ -15,11 +20,11 @@ export const ProfileHeader: React.FC<{}> = () => {
         <div className="flex items-center mb-4">
           <Avatar size="lg" className="mr-4" />
           <div className="flex flex-col">
-            <h2>Matthew Fan</h2>
+            <h2>{profile.name}</h2>
             {/* <div className="text-gray-400">36 episodes</div> */}
           </div>
         </div>
-        <div>Currently employed. Formerly a student. Listen to my podcast for my perspectives and to follow my journey through life.</div>
+        <div>{profile.bio}</div>
       </div>
     </div>
   )

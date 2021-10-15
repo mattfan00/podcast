@@ -7,9 +7,10 @@ import { Header } from "../components/Header"
 import { ContentWrapper } from "../components/ContentWrapper"
 import { PlayBar } from "../components/PlayBar"
 import { serverQuery } from "../lib/axios"
+import { User } from "../types/user"
 
 interface Props {
-  profile: any
+  profile: User
 }
 
 const Profile: NextPage<Props> = ({ profile }) => {

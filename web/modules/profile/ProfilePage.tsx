@@ -2,43 +2,23 @@ import React from "react"
 import { ProfileHeader } from "./ProfileHeader"
 import { Button } from "../../ui"
 import { PlayButton } from "../../components/PlayButton"
+import { User } from "../../types/user"
 
 interface Props {
-  profile: any
+  profile: User
 }
 
 export const ProfilePage: React.FC<Props> = ({ profile }) => {
-  const episodes = [
-    {
-      "title": "This is my life",
-      "description": "A short description of the episode"
-    },
-    {
-      "title": "Reflections on College",
-      "description": "What was my experience like in college? It was good."
-    },
-    {
-      "title": "This is my first episode",
-      "description": "My first episode on this platform. Today we are going to be talking about why I decided to make a podcast, why I made this platform, and some quick snippets about me."
-    },
-    {
-      "title": "Last one",
-      "description": "This is the last podcast in the list of my example podcasts"
-    },
-  ]
-
-  console.log(profile)
-
   return (
     <>
-      <ProfileHeader />
+      <ProfileHeader profile={profile} />
 
       <div className="flex items-center justify-between mb-6">
         <h3>Episodes</h3>
         <Button>Newest to Oldest</Button>
       </div>
 
-      {episodes.map(episode => (
+      {profile.episodes!.map(episode => (
       <div key={episode.title} className="px-4 py-4 mb-1 -mx-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
         <h5>{episode.title}</h5>
         <div>{episode.description}</div>
