@@ -2,7 +2,7 @@ import React from "react"
 import classNames from "classnames"
 
 interface Props {
-  size?: "sm" | "md" | "lg"
+  size?: "xs" | "sm" | "md" | "lg"
   url?: string
   className?: string
 }
@@ -13,6 +13,7 @@ export const Avatar: React.FC<Props> = ({
   className
 }) => {
   const sizing = {
+    "xs": "w-6 h-6",
     "sm": "w-8 h-8",
     "md": "w-10 h-10",
     "lg": "w-12 h-12"

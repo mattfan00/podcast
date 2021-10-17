@@ -8,7 +8,7 @@ const findById = async (id: string) => {
 }
 
 const create = async (user: CurrentUser, title: string, description: string) => {
-  const lengthSeconds = Math.floor(Math.random() * 100) + 100;
+  const lengthSeconds = Math.floor(Math.random() * 1000) + 100;
   const newEpisode = await episodeStore.create(title, description, lengthSeconds, user.id)
 
   return newEpisode

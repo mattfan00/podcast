@@ -34,7 +34,7 @@ export const ProfilePage: React.FC<Props> = ({ profile }) => {
       >
         <h5>{episode.title}</h5>
         <div>{episode.description}</div>
-        <div className="mt-2 text-xs text-gray-500">{profile.name}</div>
+        {/*<div className="mt-2 text-xs text-gray-500">{profile.name}</div>*/}
         <div className="flex items-center mt-2">
           <PlayButton className="mr-3" />
           <div className="text-xs text-gray-500">{dateFormat(episode.created)} · {convertDuration(episode.lengthSeconds)} min</div>
