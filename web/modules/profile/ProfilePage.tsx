@@ -1,14 +1,19 @@
 import React from "react"
+import { useRouter } from "next/router"
 import { ProfileHeader } from "./ProfileHeader"
 import { Button } from "../../ui"
 import { PlayButton } from "../../components/PlayButton"
 import { User } from "../../types/user"
+import { dateFormat } from "../../lib/dateFormat"
+import { convertDuration } from "../../lib/convertDuration"
 
 interface Props {
   profile: User
 }
 
 export const ProfilePage: React.FC<Props> = ({ profile }) => {
+  const router = useRouter()
+
   return (
     <>
       <ProfileHeader profile={profile} />
@@ -19,13 +24,20 @@ export const ProfilePage: React.FC<Props> = ({ profile }) => {
       </div>
 
       {profile.episodes!.map(episode => (
-      <div key={episode.title} className="px-4 py-4 mb-1 -mx-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+      <div 
+        key={episode.id} 
+        className="px-4 py-4 mb-1 -mx-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+        onClick={(e) => {
+          e.stopPropagation
+          router.push(`/episode/${episode.id}`)
+        }}
+      >
         <h5>{episode.title}</h5>
         <div>{episode.description}</div>
-        <div className="mt-2 text-xs text-gray-500">Matthew Fan</div>
+        <div className="mt-2 text-xs text-gray-500">{profile.name}</div>
         <div className="flex items-center mt-2">
           <PlayButton className="mr-3" />
-          <div className="text-xs text-gray-500">Sep 21, 2021 · 33 min</div>
+          <div className="text-xs text-gray-500">{dateFormat(episode.created)} · {convertDuration(episode.lengthSeconds)} min</div>
         </div>
       </div>
       ))}

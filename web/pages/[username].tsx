@@ -37,8 +37,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { username } = params!
   const { data: profile } = await serverQuery.get(`/user/${username}`)
 
-  console.log(profile)
-
   return {
     props: {
       profile
