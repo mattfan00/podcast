@@ -19,4 +19,19 @@ router.post("/episode", isAuth, requireAuth, async (req, res) => {
   res.json(episode)
 })
 
+router.get("/episode/:id/comments", async (req, res) => {
+  const { id } = req.params
+  const comments = await episodeController.getComments(id)
+
+  res.json(comments)
+})
+
+router.post("/episode/:id/comments", isAuth, requireAuth, async (req, res) => {
+  const { id } = req.params
+  const { content, parentId } = req.body
+  const comment = await episodeController.addComment(req.currentUser!, id, parentId, content)
+
+  res.json(comment)
+})  
+
 export { router as episodeRouter }

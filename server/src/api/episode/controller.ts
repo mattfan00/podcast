@@ -1,4 +1,5 @@
 import { episodeStore } from "./store/episode"
+import { commentStore } from "./store/comment"
 import { CurrentUser } from "../../types/user"
 
 const findById = async (id: string) => {
@@ -14,7 +15,28 @@ const create = async (user: CurrentUser, title: string, description: string) => 
   return newEpisode
 }
 
+const getComments = async (episodeId: string) => {
+  const foundComments = await commentStore.findByEpisodeId(episodeId)
+
+  const structuredComments = foundComments
+    .filter(comment => !comment.parentId)
+    .map(comment => {
+      comment.children = foundComments.filter(c => comment.id == c.parentId)
+      return comment
+    })
+
+  return structuredComments
+}
+
+const addComment = async (user: CurrentUser, episodeId: string, parentId: string, content: string) => {
+  const newComment = commentStore.create(content, episodeId, parentId, user.id)
+
+  return newComment
+}
+
 export const episodeController = {
   findById,
-  create
+  create,
+  getComments,
+  addComment
 }

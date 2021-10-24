@@ -45,7 +45,7 @@ export const EpisodePage: React.FC<Props> = ({ episode }) => {
         <div className="flex mb-8">
           <Avatar size="xs" className="flex-none mr-2" />
           <div>
-            <div className="text-gray-500 mb-2">{comment.author}</div>
+            <div className="mb-1 text-gray-500">{comment.author}</div>
             {comment.content}
           </div>
         </div>
