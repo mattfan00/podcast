@@ -1,6 +1,7 @@
 export enum StatusCodes {
   BadRequest = 400,
   Unauthorized = 401,
+  NotFound = 404,
   InternalServerError = 500,
 }
 
@@ -23,6 +24,12 @@ export class BadRequestError extends HTTPError {
 export class UnauthorizedError extends HTTPError {
   constructor(message = "Unauthorized") {
     super(StatusCodes.Unauthorized, message)
+  }
+}
+
+export class NotFoundError extends HTTPError {
+  constructor(message = "Not found") {
+    super(StatusCodes.NotFound, message)
   }
 }
 

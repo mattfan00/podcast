@@ -14,17 +14,25 @@ const create = async (content: string, episodeId: string, parentId: string, user
 }
 
 const findByEpisodeId = async (episodeId: string) => {
-  const foundComments = getRepository(Comment)
+  const foundComments = await getRepository(Comment)
     .createQueryBuilder("comment")
     .leftJoinAndSelect("comment.user", "user")
     .select(["comment", "user.id", "user.name", "user.username", "user.avatar"])
     .where("comment.episodeId = :episodeId", { episodeId })
+    .orderBy("comment.created", "DESC")
     .getMany()
 
   return foundComments
 }
 
+const findById = async (id: string) => {
+  const foundComment = await Comment.findOne({ id })
+
+  return foundComment
+}
+
 export const commentStore = {
   create,
-  findByEpisodeId
+  findByEpisodeId,
+  findById
 }
