@@ -104,3 +104,8 @@ a.color {
     focus:ring-gray-300
     transition
 }
+
+.comment > .comment-list {
+  @apply ml-10
+}
+

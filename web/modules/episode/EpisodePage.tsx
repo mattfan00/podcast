@@ -1,29 +1,20 @@
 import React from "react"
-import { Episode } from "../../types/episode"
+import { CommentList } from "./CommentList"
 import { Avatar } from "../../components/Avatar"
 import { PlayButton } from "../../components/PlayButton"
 import { dateFormat } from "../../lib/dateFormat"
 import { convertDuration } from "../../lib/convertDuration"
+import { useQuery } from "react-query"
+import { Comment } from "../../types/comment"
+import { Episode } from "../../types/episode"
 
 interface Props {
   episode: Episode
 }
 
 export const EpisodePage: React.FC<Props> = ({ episode }) => {
-  const comments = [
-    {
-      "author": "matthew fan",
-      "content": "hello this is a great post!"
-    },
-    {
-      "author": "john smith",
-      "content": "hello, this was a very enlightening thing to hear and i love it, thank you for sharing with us! I really liked it when you were talking about the very important thing your entire episode was based around. i learned a lot!"
-    },
-    {
-      "author": "matthew fan",
-      "content": "this was horrible"
-    }
-  ]
+  const { data: comments, isLoading } = useQuery<Comment[]>(`/episode/${episode.id}/comments`)
+
 
   return (
     <>
@@ -40,17 +31,11 @@ export const EpisodePage: React.FC<Props> = ({ episode }) => {
         </div>
       </div>
 
+      {!isLoading ? (
       <div>
-        {comments.map(comment => (
-        <div className="flex mb-8">
-          <Avatar size="xs" className="flex-none mr-2" />
-          <div>
-            <div className="mb-1 text-gray-500">{comment.author}</div>
-            {comment.content}
-          </div>
-        </div>
-        ))} 
+        <CommentList comments={comments!} />
       </div>
+      ) : ""}
     </>
   )
 }
