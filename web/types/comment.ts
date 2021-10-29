@@ -10,3 +10,10 @@ export interface Comment {
   created: string
   children: Comment[]
 }
+
+export interface PostCommentFields {
+  userId: string
+  episodeId: string
+  parentId: string | null
+  content: string
+}
