@@ -2,6 +2,7 @@ import express from "express"
 import "express-async-errors"
 import cors from "cors"
 import cookieParser from "cookie-parser"
+import morgan from "morgan"
 
 import { userRouter } from "./api/user/routes"
 import { authRouter } from "./api/auth/routes"
@@ -27,6 +28,7 @@ app.use(cors({
   credentials: true
 }))
 app.use(cookieParser())
+app.use(morgan("dev"))
 
 const router = express.Router()
 router.use(userRouter)
