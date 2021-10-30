@@ -9,6 +9,7 @@ import { clientQuery } from "../../lib/axios"
 import { queryClient } from "../../lib/query"
 import { useMutation } from "react-query"
 import { useAuth } from "../../hooks/useAuth"
+import { Link } from "../../components/Link"
 
 interface Props {
   comment: CommentType
@@ -49,10 +50,12 @@ export const Comment: React.FC<Props> = ({ comment }) => {
   return (
     <div className="mb-6 comment">
       <div className="flex">
-        <Avatar size="xs" className="flex-none mr-2" />
+        <Link href={`/${comment.user.username}`}>
+          <Avatar size="xs" className="flex-none mr-2" />
+        </Link>
         <div className="flex-1">
           <div className="mb-1">
-            {comment.user.name} · {' '}
+            <Link href={`/${comment.user.username}`}>{comment.user.name}</Link> · {' '}
             <span className="text-gray-500">{dateFormat(comment.created)}</span>
           </div>
           <div className="mb-2">{comment.content}</div>
@@ -66,7 +69,7 @@ export const Comment: React.FC<Props> = ({ comment }) => {
             <div>
               <TextArea 
                 placeholder="Reply..."
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                onChange={(e) => {
                   setCommentText(e.target.value)
                 }}
                 value={commentText}

@@ -6,6 +6,7 @@ interface Props {
   className?: string
   label?: React.ReactNode
   fullWidth?: boolean
+  type?: string
 }
 
 export const FormField = React.forwardRef<HTMLInputElement, Props>(({

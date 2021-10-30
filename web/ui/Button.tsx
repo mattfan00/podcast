@@ -2,15 +2,19 @@ import React from "react"
 import { Link } from "../components/Link"
 import classNames from "classnames"
 
-interface Props {
+interface BaseProps {
   children: React.ReactNode
-  href?: string
   className?: string
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  type?: string
+}
+
+interface Props extends BaseProps {
+  href?: string
   variant?: "light" | "dark" | "plain",
   size?: "sm"
   active?: boolean
   disabled?: boolean
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export const Button: React.FC<Props> = ({

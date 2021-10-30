@@ -1,8 +1,15 @@
 import React from "react"
 import classNames from "classnames"
 
-interface Props {
+interface BaseProps {
   className?: string
+  placeholder?: string
+  value?: string
+  autoFocus: boolean
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+}
+
+interface Props extends BaseProps {
   fullWidth?: boolean
 }
 

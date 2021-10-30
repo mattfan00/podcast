@@ -1,8 +1,12 @@
 import React from "react"
 import classNames from "classnames"
 
-interface Props {
+interface BaseProps {
   className?: string
+  type?: string
+}
+
+interface Props extends BaseProps {
   fullWidth?: boolean,
 }
 

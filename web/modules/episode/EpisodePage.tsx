@@ -13,6 +13,7 @@ import { PostCommentFields } from "../../types/comment"
 import { clientQuery } from "../../lib/axios"
 import { queryClient } from "../../lib/query"
 import { useMutation } from "react-query"
+import { Link } from "../../components/Link"
 
 interface Props {
   episode: Episode
@@ -48,11 +49,14 @@ export const EpisodePage: React.FC<Props> = ({ episode }) => {
 
   return (
     <>
-      <div className="mb-20">
-        <div className="flex items-center mb-1">
+      <div className="mb-10">
+        <Link 
+          className="flex items-center mb-1"
+          href={`/${episode.user!.username}`}
+        >
           <Avatar size="xs" className="mr-2" />
           {episode.user!.name}
-        </div>
+        </Link>
         <h2 className="mb-3">{episode.title}</h2>
         <div className="mb-5">{episode.description}</div>
         <div className="flex items-center">
