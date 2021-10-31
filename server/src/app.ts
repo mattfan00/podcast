@@ -3,10 +3,13 @@ import "express-async-errors"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import morgan from "morgan"
+import fs from "fs"
 
 import { userRouter } from "./api/user/routes"
 import { authRouter } from "./api/auth/routes"
 import { episodeRouter } from "./api/episode/routes"
+import { fileRouter } from "./api/file/routes"
+
 import { errorHandler } from "./utils/middleware/errorHandler"
 
 import { CurrentUser } from "./types/user"
@@ -34,18 +37,9 @@ const router = express.Router()
 router.use(userRouter)
 router.use(authRouter)
 router.use(episodeRouter)
+router.use(fileRouter)
 
 app.use("/v1", router) 
-
-app.post("/v1/upload", 
-  express.raw({
-    limit: "100mb"
-  }),
-  (req, res) => {
-  console.log(req.body)
-
-  res.send("hey")
-}) 
 
 app.use(errorHandler)
 

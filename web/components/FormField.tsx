@@ -1,5 +1,5 @@
 import React from "react"
-import { Input } from "../ui"
+import { Input, TextArea } from "../ui"
 import classNames from "classnames"
 
 interface Props {
@@ -7,12 +7,14 @@ interface Props {
   label?: React.ReactNode
   fullWidth?: boolean
   type?: string
+  as?: "Input" | "TextArea"
 }
 
 export const FormField = React.forwardRef<HTMLInputElement, Props>(({
   className,
   label,
   fullWidth,
+  as = "Input",
   ...rest
 }, ref) => {
   return (
