@@ -6,6 +6,7 @@ import { PlayButton } from "../../components/PlayButton"
 import { User } from "../../types/user"
 import { dateFormat } from "../../lib/dateFormat"
 import { convertDuration } from "../../lib/convertDuration"
+import { useQuery } from "react-query"
 
 interface Props {
   profile: User
@@ -14,16 +15,20 @@ interface Props {
 export const ProfilePage: React.FC<Props> = ({ profile }) => {
   const router = useRouter()
 
+  const { data } = useQuery(`/user/${profile.username}`, { 
+    initialData: profile
+  })
+
   return (
     <>
-      <ProfileHeader profile={profile} />
+      <ProfileHeader profile={data!} />
 
       <div className="flex items-center justify-between mb-6">
         <h3>Episodes</h3>
         <Button>Newest to Oldest</Button>
       </div>
 
-      {profile.episodes!.map(episode => (
+      {data!.episodes!.map(episode => (
       <div 
         key={episode.id} 
         className="px-4 py-4 mb-1 -mx-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"

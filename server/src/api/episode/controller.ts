@@ -9,9 +9,9 @@ const findById = async (id: string) => {
   return foundEpisode 
 }
 
-const create = async (user: CurrentUser, title: string, description: string) => {
+const create = async (user: CurrentUser, title: string, description: string, url: string) => {
   const lengthSeconds = Math.floor(Math.random() * 1000) + 100;
-  const newEpisode = await episodeStore.create(title, description, lengthSeconds, user.id)
+  const newEpisode = await episodeStore.create(title, description, lengthSeconds, url, user.id)
 
   return newEpisode
 }

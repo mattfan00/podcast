@@ -1,8 +1,12 @@
 import React, { useState, useRef } from "react"
+import { useRouter } from "next/router"
 import { Modal, Button } from "../../ui"
 import { clientQuery } from "../../lib/axios"
+import { queryClient } from "../../lib/query"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { FormField } from "../FormField"
+import { useMutation } from "react-query"
+import { useAuth } from "../../hooks/useAuth"
 
 export const Upload: React.FC<{}> = () => {
   interface FileDetails {
@@ -14,8 +18,11 @@ export const Upload: React.FC<{}> = () => {
   interface EpisodeFields {
     title: string
     description: string
+    url: string
   }
 
+  const router = useRouter()
+  const { user } = useAuth()
   const [showModal, setShowModal] = useState<boolean>(false)
   const [showEpisodeDetails, setShowEpisodeDetails] = useState<boolean>(false)
   const [fileDetails, setFileDetails] = useState<FileDetails>()
@@ -39,6 +46,28 @@ export const Upload: React.FC<{}> = () => {
   }
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm<EpisodeFields>()
+  const episodeMutation = useMutation((fields: EpisodeFields) => 
+    clientQuery.post("/episode", fields)
+  )
+
+  const onSubmit: SubmitHandler<EpisodeFields> = async (data) => {
+    try {
+      await episodeMutation.mutateAsync({
+        ...data,
+        url: fileDetails!.url
+      })
+
+      setShowModal(false)
+      setShowEpisodeDetails(false)
+      setFileDetails(undefined)
+
+      queryClient.invalidateQueries(`/user/${user!.username}`)
+      router.push(`/${user!.username}`)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
 
   return (
      <>
@@ -77,11 +106,10 @@ export const Upload: React.FC<{}> = () => {
             {fileDetails!.fileName}
           </div>
 
-          <form onSubmit={handleSubmit(() => {})}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <FormField 
               className="mb-3"
               label="Title"
-              type="email"
               fullWidth
               {...register("title")}
             />
@@ -96,7 +124,10 @@ export const Upload: React.FC<{}> = () => {
               <Button 
                 className="mr-2"
                 variant="plain" 
-                onClick={handleClose}
+                onClick={() => {
+                  setShowEpisodeDetails(false)
+                  setFileDetails(undefined)
+                }}
               >Cancel</Button>
               <Button type="submit">Submit</Button>
             </div>

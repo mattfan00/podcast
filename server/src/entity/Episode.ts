@@ -18,6 +18,9 @@ export class Episode extends BaseEntity{
   @Column("text")
   description: string
 
+  @Column("text", { nullable: true })
+  url: string
+
   @Column()
   lengthSeconds: number
 
