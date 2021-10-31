@@ -1,9 +1,9 @@
 import React from "react"
-import { Button } from "../../ui"
 import { Logo } from "../../components/icons/Logo"
 import { Avatar } from "../../components/Avatar"
 import { Login } from "./Login"
 import { Register } from "./Register"
+import { Upload } from "./Upload"
 import { useAuth } from "../../hooks/useAuth"
 
 export const Header: React.FC<{}> = () => {
@@ -27,7 +27,7 @@ export const Header: React.FC<{}> = () => {
           {!isLoading ? (
             user ? (
               <>
-                <Button variant="dark">Upload</Button>
+                <Upload />
                 <Avatar className="ml-4" />
               </>
             ) : (

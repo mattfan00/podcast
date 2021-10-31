@@ -6,8 +6,7 @@ import { useAuth } from "../../hooks/useAuth"
 import { useMutation } from "react-query"
 import { clientQuery } from "../../lib/axios"
 
-export const Login: React.FC<{}> = ({
-})  => {
+export const Login: React.FC<{}> = ()  => {
   interface LoginFields  {
     email: string
     password: string

@@ -88,7 +88,7 @@ const ModalComponent: React.FC<ModalProps> = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-black opacity-20" />
+            <Dialog.Overlay className="fixed inset-0 bg-black opacity-40" />
           </Transition.Child>
 
           <span

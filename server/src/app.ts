@@ -37,6 +37,16 @@ router.use(episodeRouter)
 
 app.use("/v1", router) 
 
+app.post("/v1/upload", 
+  express.raw({
+    limit: "100mb"
+  }),
+  (req, res) => {
+  console.log(req.body)
+
+  res.send("hey")
+}) 
+
 app.use(errorHandler)
 
 export { app }
