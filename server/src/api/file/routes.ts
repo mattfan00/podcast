@@ -15,6 +15,8 @@ router.post("/file/upload/:fileName", express.raw({ limit: "100mb"} ), async (re
 router.get("/file/get/:fileName", async (req, res) => {
   const { fileName } = req.params
 
+  console.log("getting file")
+
   res.sendFile(fileName, { root: `${process.cwd()}/files` })
 })
 
