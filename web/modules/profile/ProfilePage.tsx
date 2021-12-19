@@ -7,6 +7,8 @@ import { User } from "../../types/user"
 import { dateFormat } from "../../lib/dateFormat"
 import { convertDuration } from "../../lib/convertDuration"
 import { useQuery } from "react-query"
+import { Episode } from "../../types/episode"
+import { useCurrentEpisodeStore } from "../../globalStore/useCurrentEpisodeStore"
 
 interface Props {
   profile: User
@@ -14,10 +16,16 @@ interface Props {
 
 export const ProfilePage: React.FC<Props> = ({ profile }) => {
   const router = useRouter()
+  const setEpisode = useCurrentEpisodeStore(state => state.setCurrentEpisode)
+  const currentEpisode = useCurrentEpisodeStore(state => state.currentEpisode)
 
   const { data } = useQuery(`/user/${profile.username}`, { 
     initialData: profile
   })
+
+  const handlePlay = (episode: Episode) => {
+    setEpisode(episode)
+  }
 
   return (
     <>
@@ -41,7 +49,10 @@ export const ProfilePage: React.FC<Props> = ({ profile }) => {
         <div>{episode.description}</div>
         {/*<div className="mt-2 text-xs text-gray-500">{profile.name}</div>*/}
         <div className="flex items-center mt-2">
-          <PlayButton className="mr-3" />
+          <PlayButton 
+            className="mr-3" 
+            onClick={() => handlePlay(episode)}
+          />
           <div className="text-xs text-gray-500">{dateFormat(episode.created)} · {convertDuration(episode.lengthSeconds)} min</div>
         </div>
       </div>
