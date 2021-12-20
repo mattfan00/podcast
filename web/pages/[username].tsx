@@ -5,7 +5,6 @@ import { NextPage } from "next"
 import { ProfilePage } from "../modules/profile/ProfilePage"
 import { Header } from "../components/Header"
 import { ContentWrapper } from "../components/ContentWrapper"
-import { PlayBar } from "../components/PlayBar"
 import { serverQuery } from "../lib/axios"
 import { User } from "../types/user"
 
@@ -27,8 +26,6 @@ const Profile: NextPage<Props> = ({ profile }) => {
       <ContentWrapper>
         <ProfilePage profile={profile} />
       </ContentWrapper>
-
-      <PlayBar />
     </>
   )
 }

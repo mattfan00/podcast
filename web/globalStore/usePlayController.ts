@@ -1,12 +1,12 @@
 import create from "zustand"
 import { Episode } from "../types/episode"
 
-interface CurrentEpisodeStore {
+interface PlayControllerStore {
   currentEpisode: Episode | null
   setCurrentEpisode: (e: Episode) => void
 }
 
-export const useCurrentEpisodeStore = create<CurrentEpisodeStore>(set => ({
+export const usePlayController = create<PlayControllerStore>(set => ({
   currentEpisode: null,
   setCurrentEpisode: (e) => set(() => ({ currentEpisode: e }))
 }))

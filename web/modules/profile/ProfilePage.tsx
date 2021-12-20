@@ -8,7 +8,7 @@ import { dateFormat } from "../../lib/dateFormat"
 import { convertDuration } from "../../lib/convertDuration"
 import { useQuery } from "react-query"
 import { Episode } from "../../types/episode"
-import { useCurrentEpisodeStore } from "../../globalStore/useCurrentEpisodeStore"
+import { usePlayController } from "../../globalStore/usePlayController"
 
 interface Props {
   profile: User
@@ -16,8 +16,8 @@ interface Props {
 
 export const ProfilePage: React.FC<Props> = ({ profile }) => {
   const router = useRouter()
-  const setEpisode = useCurrentEpisodeStore(state => state.setCurrentEpisode)
-  const currentEpisode = useCurrentEpisodeStore(state => state.currentEpisode)
+  const setEpisode = usePlayController(state => state.setCurrentEpisode)
+  const currentEpisode = usePlayController(state => state.currentEpisode)
 
   const { data } = useQuery(`/user/${profile.username}`, { 
     initialData: profile

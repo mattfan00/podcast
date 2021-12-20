@@ -2,6 +2,7 @@ import { AppProps } from "next/app"
 import { AuthProvider } from "../contexts/Auth"
 import { QueryClientProvider } from "react-query"
 import { queryClient } from "../lib/query"
+import { PlayBar } from "../modules/PlayBar"
 
 import "../styles/globals.css"
 import "../fontawesome"
@@ -11,6 +12,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <Component {...pageProps} />
+
+        <PlayBar />
       </AuthProvider>
     </QueryClientProvider>
   )

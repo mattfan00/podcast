@@ -4,7 +4,6 @@ import { NextPage } from "next"
 import { Header } from "../../components/Header"
 import { ContentWrapper } from "../../components/ContentWrapper"
 import { EpisodePage } from "../../modules/episode/EpisodePage"
-import { PlayBar } from "../../components/PlayBar"
 import { serverQuery } from "../../lib/axios"
 import { Episode as EpisodeType } from "../../types/episode"
 
@@ -23,8 +22,6 @@ const Episode: NextPage<Props> = ({ episode }) => {
       <ContentWrapper>
         <EpisodePage episode={episode} />
       </ContentWrapper>
-
-      <PlayBar />
     </>
   )
 }
