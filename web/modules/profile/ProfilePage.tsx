@@ -9,6 +9,7 @@ import { convertDuration } from "../../lib/convertDuration"
 import { useQuery } from "react-query"
 import { Episode } from "../../types/episode"
 import { usePlayController } from "../../globalStore/usePlayController"
+import { Howl } from "howler"
 
 interface Props {
   profile: User
@@ -16,15 +17,26 @@ interface Props {
 
 export const ProfilePage: React.FC<Props> = ({ profile }) => {
   const router = useRouter()
-  const setEpisode = usePlayController(state => state.setCurrentEpisode)
-  const currentEpisode = usePlayController(state => state.currentEpisode)
+  const setCurrentEpisode = usePlayController(state => state.setCurrentEpisode)
+  const setSound = usePlayController(state => state.setSound)
+  const setIsPlaying = usePlayController(state => state.setIsPlaying)
 
   const { data } = useQuery(`/user/${profile.username}`, { 
     initialData: profile
   })
 
   const handlePlay = (episode: Episode) => {
-    setEpisode(episode)
+    setCurrentEpisode(episode)
+
+    const newSound = new Howl({ 
+      src: [`http://localhost:8080/v1${episode.url}`],
+      format: ["mp3"],
+      html5: true,
+    })
+
+    setSound(newSound)
+    setIsPlaying(true)
+    newSound.play()
   }
 
   return (
