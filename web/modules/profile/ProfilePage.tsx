@@ -7,9 +7,7 @@ import { User } from "../../types/user"
 import { dateFormat } from "../../lib/dateFormat"
 import { convertDuration } from "../../lib/convertDuration"
 import { useQuery } from "react-query"
-import { Episode } from "../../types/episode"
-import { usePlayController } from "../../globalStore/usePlayController"
-import { Howl } from "howler"
+import { usePlayController } from "../../hooks/usePlayController"
 
 interface Props {
   profile: User
@@ -17,27 +15,10 @@ interface Props {
 
 export const ProfilePage: React.FC<Props> = ({ profile }) => {
   const router = useRouter()
-  const setCurrentEpisode = usePlayController(state => state.setCurrentEpisode)
-  const setSound = usePlayController(state => state.setSound)
-  const setIsPlaying = usePlayController(state => state.setIsPlaying)
 
   const { data } = useQuery(`/user/${profile.username}`, { 
     initialData: profile
   })
-
-  const handlePlay = (episode: Episode) => {
-    setCurrentEpisode(episode)
-
-    const newSound = new Howl({ 
-      src: [`http://localhost:8080/v1${episode.url}`],
-      format: ["mp3"],
-      html5: true,
-    })
-
-    setSound(newSound)
-    setIsPlaying(true)
-    newSound.play()
-  }
 
   return (
     <>
@@ -53,7 +34,7 @@ export const ProfilePage: React.FC<Props> = ({ profile }) => {
         key={episode.id} 
         className="px-4 py-4 mb-1 -mx-4 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
         onClick={(e) => {
-          e.stopPropagation
+          e.stopPropagation()
           router.push(`/episode/${episode.id}`)
         }}
       >
@@ -63,7 +44,7 @@ export const ProfilePage: React.FC<Props> = ({ profile }) => {
         <div className="flex items-center mt-2">
           <PlayButton 
             className="mr-3" 
-            onClick={() => handlePlay(episode)}
+            onClick={() => usePlayController(episode)}
           />
           <div className="text-xs text-gray-500">{dateFormat(episode.created)} · {convertDuration(episode.lengthSeconds)} min</div>
         </div>

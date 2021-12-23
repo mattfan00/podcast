@@ -1,24 +1,10 @@
 import React, { useState } from "react"
 import { PlayButton } from "../components/PlayButton"
-import { usePlayController } from "../globalStore/usePlayController"
+import { usePlayController } from "../hooks/usePlayController"
+import { usePlayControllerStore } from "../globalStore/usePlayControllerStore"
 
 export const PlayBar: React.FC<{}> = () => {
-  const currentEpisode = usePlayController(state => state.currentEpisode)
-  const sound = usePlayController(state => state.sound)
-  const isPlaying = usePlayController(state => state.isPlaying)
-  const setIsPlaying = usePlayController(state => state.setIsPlaying)
-
-  const handlePlay = () => {
-    if (sound) {
-      if (!isPlaying) {
-        sound.play();
-        setIsPlaying(true)
-      } else {
-        sound.pause()
-        setIsPlaying(false)
-      }
-    }
-  }
+  const { currentEpisode } = usePlayControllerStore()
 
   return (
     <div className="fixed bottom-0 flex justify-center w-full pointer-events-none">
@@ -31,7 +17,7 @@ export const PlayBar: React.FC<{}> = () => {
           </div>
           <div className="ml-2">
             <PlayButton 
-              onClick={handlePlay}
+              //onClick={(usePlayController())}
             />
           </div>
         </div>
