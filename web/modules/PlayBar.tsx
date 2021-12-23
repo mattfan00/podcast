@@ -17,7 +17,7 @@ export const PlayBar: React.FC<{}> = () => {
           </div>
           <div className="ml-2">
             <PlayButton 
-              //onClick={(usePlayController())}
+              onClick={() => usePlayController(currentEpisode)}
             />
           </div>
         </div>

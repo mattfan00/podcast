@@ -1,9 +1,8 @@
-import React from "react"
 import { Howl } from "howler"
 import { usePlayControllerStore } from "../globalStore/usePlayControllerStore"
 import { Episode } from "../types/episode"
 
-export const usePlayController = (episode: Episode) => { 
+export const usePlayController = (episode: Episode | null) => { 
   const { 
     sound,
     currentEpisode,
@@ -12,6 +11,8 @@ export const usePlayController = (episode: Episode) => {
     setCurrentEpisode, 
     setIsPlaying 
   } = usePlayControllerStore.getState()
+  
+  if (episode === null) return
 
   if (currentEpisode && currentEpisode.id === episode.id && sound) {
       if (isPlaying) {
