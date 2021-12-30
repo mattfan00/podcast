@@ -29,7 +29,11 @@ export const usePlayController = (episode: Episode | null) => {
       src: [`http://localhost:8080/v1${episode.url}`],
       format: ["mp3"],
       html5: true,
+      onplay: () => {
+        console.log("play")
+      }
     })
+
 
     setSound(newSound)
     setIsPlaying(true)
