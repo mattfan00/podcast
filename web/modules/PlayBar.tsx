@@ -1,10 +1,28 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import { PlayButton } from "../components/PlayButton"
 import { usePlayController } from "../hooks/usePlayController"
 import { usePlayControllerStore } from "../globalStore/usePlayControllerStore"
 
 export const PlayBar: React.FC<{}> = () => {
-  const { currentEpisode, isPlaying } = usePlayControllerStore()
+  const { currentEpisode, sound, isPlaying } = usePlayControllerStore()
+  const seekerRef = useRef<HTMLDivElement | null>(null)
+
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (currentEpisode && sound) { // only seek if there is an episode loaded in
+      const seekerRefDiv = seekerRef.current
+
+      if (seekerRefDiv) {
+        const seekerLeftX = seekerRefDiv.offsetLeft
+        const seekerWidth = seekerRefDiv.clientWidth
+        const cursorLeftX = e.clientX
+
+        const seekPercent = (cursorLeftX - seekerLeftX) / seekerWidth
+        const seekSeconds = sound.duration() * seekPercent
+
+        sound.seek(seekSeconds)
+      }
+    }
+  }
 
   return (
     <div className="fixed bottom-0 flex justify-center w-full pointer-events-none">
@@ -23,9 +41,18 @@ export const PlayBar: React.FC<{}> = () => {
               />
             </div>
           </div>
-          <div className="relative flex h-1 mx-3 mb-2 rounded">
-            <div className="absolute top-0 w-full h-full bg-gray-400 rounded"></div>
-            <div className="absolute top-0 z-10 w-1/2 h-full bg-gray-200 rounded"></div>
+          <div 
+            className="relative h-3 mx-3 mb-2 cursor-pointer"
+            ref={seekerRef}
+          >
+            <div 
+              className="flex items-center w-full h-full" 
+              onClick={handleSeek}
+            >
+              <div className="w-full h-1 bg-gray-400 rounded">
+                <div className="w-1/2 h-full bg-gray-200 rounded"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
