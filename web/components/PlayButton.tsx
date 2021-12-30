@@ -4,11 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 interface Props {
   className?: string
+  isPlaying?: boolean
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export const PlayButton: React.FC<Props> = ({
   className,
+  isPlaying = false,
   onClick,
 }) => { 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -26,7 +28,11 @@ export const PlayButton: React.FC<Props> = ({
       )}
       onClick={handleClick}
     >
+      {isPlaying ? (
+      <FontAwesomeIcon size="xs" icon="pause" fixedWidth />
+      ) : (
       <FontAwesomeIcon size="xs" icon="play" fixedWidth />
+      )}
     </button>
   )
 }

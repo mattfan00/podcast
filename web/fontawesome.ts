@@ -1,7 +1,8 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 import {
-  faPlay
+  faPlay,
+  faPause
 } from "@fortawesome/free-solid-svg-icons"
 
 import {
@@ -9,5 +10,6 @@ import {
 } from "@fortawesome/free-regular-svg-icons"
 
 library.add(
-  faPlay
+  faPlay,
+  faPause
 )

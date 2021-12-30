@@ -4,7 +4,7 @@ import { usePlayController } from "../hooks/usePlayController"
 import { usePlayControllerStore } from "../globalStore/usePlayControllerStore"
 
 export const PlayBar: React.FC<{}> = () => {
-  const { currentEpisode } = usePlayControllerStore()
+  const { currentEpisode, isPlaying } = usePlayControllerStore()
 
   return (
     <div className="fixed bottom-0 flex justify-center w-full pointer-events-none">
@@ -18,6 +18,7 @@ export const PlayBar: React.FC<{}> = () => {
             </div>
             <div className="ml-2">
               <PlayButton 
+                isPlaying={isPlaying}
                 onClick={() => usePlayController(currentEpisode)}
               />
             </div>

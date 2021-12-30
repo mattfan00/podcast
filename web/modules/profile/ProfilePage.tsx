@@ -7,6 +7,7 @@ import { User } from "../../types/user"
 import { dateFormat } from "../../lib/dateFormat"
 import { convertDuration } from "../../lib/convertDuration"
 import { useQuery } from "react-query"
+import { usePlayControllerStore } from "../../globalStore/usePlayControllerStore"
 import { usePlayController } from "../../hooks/usePlayController"
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 
 export const ProfilePage: React.FC<Props> = ({ profile }) => {
   const router = useRouter()
+  const { currentEpisode, isPlaying } = usePlayControllerStore()
 
   const { data } = useQuery(`/user/${profile.username}`, { 
     initialData: profile
@@ -44,6 +46,7 @@ export const ProfilePage: React.FC<Props> = ({ profile }) => {
         <div className="flex items-center mt-2">
           <PlayButton 
             className="mr-3" 
+            isPlaying={isPlaying && currentEpisode !== null && currentEpisode.id === episode.id}
             onClick={() => usePlayController(episode)}
           />
           <div className="text-xs text-gray-500">{dateFormat(episode.created)} · {convertDuration(episode.lengthSeconds)} min</div>
