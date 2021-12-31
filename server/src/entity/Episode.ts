@@ -21,7 +21,7 @@ export class Episode extends BaseEntity{
   @Column("text", { nullable: true })
   url: string
 
-  @Column()
+  @Column("float", { nullable: true })
   lengthSeconds: number
 
   @Column("uuid")

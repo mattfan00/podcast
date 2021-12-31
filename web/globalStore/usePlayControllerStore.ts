@@ -11,6 +11,9 @@ interface PlayControllerStore {
 
   isPlaying: boolean
   setIsPlaying: (isPlaying: boolean) => void
+
+  currentTimestamp: number // in seconds
+  setCurrentTimestamp: (t: number) => void
 }
 
 export const usePlayControllerStore = create<PlayControllerStore>((set, get) => ({
@@ -30,5 +33,10 @@ export const usePlayControllerStore = create<PlayControllerStore>((set, get) => 
   isPlaying: false,
   setIsPlaying: (isPlaying) => {
     set(() => ({ isPlaying }))
+  },
+
+  currentTimestamp: 0,
+  setCurrentTimestamp: (currentTimestamp) => {
+    set(() => ({ currentTimestamp}))
   }
 }))

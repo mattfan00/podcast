@@ -2,7 +2,7 @@ import { AppProps } from "next/app"
 import { AuthProvider } from "../contexts/Auth"
 import { QueryClientProvider } from "react-query"
 import { queryClient } from "../lib/query"
-import { PlayBar } from "../modules/PlayBar"
+import { PlayBar } from "../components/PlayBar"
 
 import "../styles/globals.css"
 import "../fontawesome"

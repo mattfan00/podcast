@@ -1,26 +1,17 @@
-import React, { useState, useRef } from "react"
-import { PlayButton } from "../components/PlayButton"
-import { usePlayController } from "../hooks/usePlayController"
-import { usePlayControllerStore } from "../globalStore/usePlayControllerStore"
+import React, { useState, useRef, useEffect } from "react"
+import { PlayButton } from "../PlayButton"
+import { usePlayController } from "../../hooks/usePlayController"
+import { usePlayControllerStore } from "../../globalStore/usePlayControllerStore"
+import { Seeker } from "./Seeker"
 
 export const PlayBar: React.FC<{}> = () => {
   const { currentEpisode, sound, isPlaying } = usePlayControllerStore()
-  const seekerRef = useRef<HTMLDivElement | null>(null)
 
-  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (currentEpisode && sound) { // only seek if there is an episode loaded in
-      const seekerRefDiv = seekerRef.current
-
-      if (seekerRefDiv) {
-        const seekerLeftX = seekerRefDiv.offsetLeft
-        const seekerWidth = seekerRefDiv.clientWidth
-        const cursorLeftX = e.clientX
-
-        const seekPercent = (cursorLeftX - seekerLeftX) / seekerWidth
-        const seekSeconds = sound.duration() * seekPercent
-
-        sound.seek(seekSeconds)
-      }
+  const handleSeekerChange = (e: React.MouseEvent<HTMLDivElement>, value: number) => {
+    console.log("hey")
+    if (currentEpisode && sound)  {
+      console.log(value)
+      sound!.seek(value)
     }
   }
 
@@ -41,19 +32,13 @@ export const PlayBar: React.FC<{}> = () => {
               />
             </div>
           </div>
-          <div 
-            className="relative h-3 mx-3 mb-2 cursor-pointer"
-            ref={seekerRef}
-          >
-            <div 
-              className="flex items-center w-full h-full" 
-              onClick={handleSeek}
-            >
-              <div className="w-full h-1 bg-gray-400 rounded">
-                <div className="w-1/2 h-full bg-gray-200 rounded"></div>
-              </div>
-            </div>
-          </div>
+
+          <Seeker
+            min={0}
+            max={currentEpisode ? currentEpisode.lengthSeconds : 0}
+            disabled={!currentEpisode && !sound}
+            onChange={handleSeekerChange}
+          /> 
         </div>
       </div>
 
