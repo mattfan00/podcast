@@ -12,6 +12,13 @@ router.get("/episode/:id", async (req, res) => {
   res.json(episode)
 })
 
+router.get("/user/:userId/episodes", async (req, res) => {
+  const { userId } = req.params
+  const episodes = await episodeController.findAllByUserId(userId)
+
+  res.json(episodes)
+}) 
+
 router.post("/episode", isAuth, requireAuth, async (req, res) => {
   const { title, description, url } = req.body
   const episode = await episodeController.create(req.currentUser!, title, description, url)

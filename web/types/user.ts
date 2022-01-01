@@ -1,5 +1,3 @@
-import { Episode } from "./episode"
-
 export interface User {
   id: string
   name: string
@@ -8,6 +6,5 @@ export interface User {
   avatar: string | null
   banner: string | null
   email: string
-  episodes?: Episode[]
   created: string
 }

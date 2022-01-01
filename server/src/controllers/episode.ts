@@ -9,6 +9,12 @@ const findById = async (id: string) => {
   return foundEpisode 
 }
 
+const findAllByUserId = async (userId: string) => {
+  const foundEpisodes = await episodeStore.findAllByUserId(userId)
+
+  return foundEpisodes
+}
+
 const create = async (user: CurrentUser, title: string, description: string, url: string) => {
   const lengthSeconds = Math.floor(Math.random() * 1000) + 100;
   const newEpisode = await episodeStore.create(title, description, lengthSeconds, url, user.id)
@@ -46,6 +52,7 @@ const addComment = async (user: CurrentUser, episodeId: string, parentId: string
 
 export const episodeController = {
   findById,
+  findAllByUserId,
   create,
   getComments,
   addComment

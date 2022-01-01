@@ -6,6 +6,13 @@ const findById = async (id: string) => {
   })
 }
 
+const findAllByUserId = async (userId: string) => {
+  return await Episode.find({ 
+    where: { userId },
+    relations: ["user"]
+  })
+}
+
 const create = async (
   title: string, 
   description: string, 
@@ -27,6 +34,7 @@ const create = async (
 
 export const episodeStore = {
   findById,
+  findAllByUserId,
   create
 }
 
