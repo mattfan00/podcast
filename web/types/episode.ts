@@ -7,6 +7,6 @@ export interface Episode {
   description: string
   lengthSeconds: number
   userId: string
-  user?: User
+  user: User
   created: string
 }

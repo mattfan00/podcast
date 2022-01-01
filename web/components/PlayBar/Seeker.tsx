@@ -16,8 +16,6 @@ export const Seeker: React.FC<Props> = ({
   const seekerRef = useRef<HTMLDivElement | null>(null)
   const [percent, setPercent] = useState(0)
 
-  console.log("maX: ", max)
-
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!disabled) { // only seek if there is an episode loaded in
       const seekerRefDiv = seekerRef.current

@@ -33,6 +33,20 @@ export const Upload: React.FC<{}> = () => {
   const handleSelectFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files![0]
 
+
+    let formData = new FormData()
+    formData.append("file", selectedFile)
+
+    const result = await clientQuery.post<FileDetails>(`/file/upload`, formData, {
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    })
+
+    setFileDetails(result.data)
+    setShowEpisodeDetails(true)
+
+    /*
     const blob = await selectedFile.arrayBuffer()
 
     const result = await clientQuery.post<FileDetails>(`/file/upload/${selectedFile.name}`, blob, {
@@ -43,6 +57,7 @@ export const Upload: React.FC<{}> = () => {
 
     setFileDetails(result.data)
     setShowEpisodeDetails(true)
+     */
   }
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm<EpisodeFields>()
@@ -61,7 +76,7 @@ export const Upload: React.FC<{}> = () => {
       setShowEpisodeDetails(false)
       setFileDetails(undefined)
 
-      queryClient.invalidateQueries(`/user/${user!.username}`)
+      queryClient.invalidateQueries(`/user/${user!.id}/episodes`)
       router.push(`/${user!.username}`)
     } catch (e) {
       console.error(e)

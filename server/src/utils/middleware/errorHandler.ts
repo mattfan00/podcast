@@ -7,6 +7,8 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
+  console.error(err)
+
   if (err instanceof HTTPError) {
     return res.status(err.statusCode).json({ message: err.message })
   }
