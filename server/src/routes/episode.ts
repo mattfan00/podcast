@@ -1,7 +1,7 @@
 import express from "express"
-import { episodeController } from "./controller"
-import { isAuth } from "../../utils/middleware/isAuth"
-import { requireAuth } from "../../utils/middleware/requireAuth"
+import { episodeController } from "../controllers/episode"
+import { isAuth } from "../utils/middleware/isAuth"
+import { requireAuth } from "../utils/middleware/requireAuth"
 
 const router = express.Router()
 

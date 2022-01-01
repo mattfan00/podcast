@@ -1,4 +1,4 @@
-import { Episode } from "../../../entity/Episode"
+import { Episode } from "../entity/Episode"
 
 const findById = async (id: string) => {
   return await Episode.findOne(id, { 

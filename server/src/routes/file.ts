@@ -1,5 +1,5 @@
 import express from "express"
-import { fileController } from "./controller"
+import { fileController } from "../controllers/file"
 
 const router = express.Router()
 
@@ -21,3 +21,4 @@ router.get("/file/get/:fileName", async (req, res) => {
 })
 
 export { router as fileRouter }
+

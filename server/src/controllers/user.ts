@@ -1,5 +1,5 @@
-import { userStore } from "./store/user"
-import { BadRequestError } from "../../utils/errors"
+import { userStore } from "../store/user"
+import { BadRequestError } from "../utils/errors"
 
 const view = async (username: string) => {
   const foundUser = await userStore.findByUsername(username)

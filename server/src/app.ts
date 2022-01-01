@@ -3,12 +3,11 @@ import "express-async-errors"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import morgan from "morgan"
-import fs from "fs"
 
-import { userRouter } from "./api/user/routes"
-import { authRouter } from "./api/auth/routes"
-import { episodeRouter } from "./api/episode/routes"
-import { fileRouter } from "./api/file/routes"
+import { userRouter } from "./routes/user"
+import { authRouter } from "./routes/auth"
+import { episodeRouter } from "./routes/episode"
+import { fileRouter } from "./routes/file"
 
 import { errorHandler } from "./utils/middleware/errorHandler"
 

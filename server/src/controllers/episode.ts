@@ -1,7 +1,7 @@
-import { episodeStore } from "./store/episode"
-import { commentStore } from "./store/comment"
-import { CurrentUser } from "../../types/user"
-import { NotFoundError } from "../../utils/errors"
+import { episodeStore } from "../store/episode"
+import { commentStore } from "../store/comment"
+import { CurrentUser } from "../types/user"
+import { NotFoundError } from "../utils/errors"
 
 const findById = async (id: string) => {
   const foundEpisode = await episodeStore.findById(id)

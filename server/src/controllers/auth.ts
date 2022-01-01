@@ -1,7 +1,7 @@
-import { userStore } from "./store/user"
-import { hash, compare } from "../../utils/password"
-import { BadRequestError, UnauthorizedError } from "../../utils/errors"
-import { CurrentUser } from "../../types/user"
+import { userStore } from "../store/user"
+import { hash, compare } from "../utils/password"
+import { BadRequestError, UnauthorizedError } from "../utils/errors"
+import { CurrentUser } from "../types/user"
 import jwt from "jsonwebtoken"
 
 const login = async (email: string, password: string) => {

@@ -1,5 +1,5 @@
 import { getRepository } from "typeorm"
-import { Comment } from "../../../entity/Comment"
+import { Comment } from "../entity/Comment"
 
 const create = async (content: string, episodeId: string, parentId: string, userId: string) => {
   const newComment = Comment.create({ 
