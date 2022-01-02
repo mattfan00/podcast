@@ -2,6 +2,7 @@ import {
   Entity, 
   Column, 
   ManyToOne,
+  JoinColumn,
   PrimaryGeneratedColumn,  
   BaseEntity
 } from "typeorm"
@@ -18,16 +19,17 @@ export class Episode extends BaseEntity{
   @Column("text")
   description: string
 
-  @Column("text", { nullable: true })
+  @Column("text")
   url: string
 
-  @Column("float", { nullable: true })
-  lengthSeconds: number
+  @Column("float", { name: "duration_seconds" })
+  durationSeconds: number
 
-  @Column("uuid")
+  @Column("uuid", { name: "user_id" })
   userId: string
 
-  @ManyToOne(() => User, user => user.episodes)
+  @ManyToOne(() => User)
+  @JoinColumn({ name: "user_id" })
   user: User
 
   @Column("timestamptz", { default: () => "CURRENT_TIMESTAMP" })

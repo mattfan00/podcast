@@ -1,3 +1,4 @@
+import { getConnection } from "typeorm"
 import { Episode } from "../entity/Episode"
 
 const findById = async (id: string) => {
@@ -17,14 +18,14 @@ const findAllByUserId = async (userId: string) => {
 const create = async (
   title: string, 
   description: string, 
-  lengthSeconds: number,
+  durationSeconds: number,
   url: string,
   userId: string
 ) => {
   const newEpisode = Episode.create({ 
     title,
     description,
-    lengthSeconds,
+    durationSeconds,
     url,
     userId
   })
