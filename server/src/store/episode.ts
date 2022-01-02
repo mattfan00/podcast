@@ -9,7 +9,8 @@ const findById = async (id: string) => {
 const findAllByUserId = async (userId: string) => {
   return await Episode.find({ 
     where: { userId },
-    relations: ["user"]
+    relations: ["user"],
+    order: { created: "DESC" }
   })
 }
 
