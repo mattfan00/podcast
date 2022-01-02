@@ -10,8 +10,8 @@ import { useAuth } from "../../hooks/useAuth"
 
 export const Upload: React.FC<{}> = () => {
   interface FileDetails {
-    id: string
-    fileName: string
+    originalFileName: string
+    newFileName: string
     url: string
   }
 
@@ -35,7 +35,7 @@ export const Upload: React.FC<{}> = () => {
 
 
     let formData = new FormData()
-    formData.append("file", selectedFile)
+    formData.append("audio", selectedFile)
 
     const result = await clientQuery.post<FileDetails>(`/file/upload`, formData, {
       headers: {
@@ -118,7 +118,7 @@ export const Upload: React.FC<{}> = () => {
         ) : (
         <>
           <div className="flex items-center px-3 py-2 mb-4 bg-gray-100 rounded">
-            {fileDetails!.fileName}
+            {fileDetails!.originalFileName}
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)}>

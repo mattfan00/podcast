@@ -1,28 +1,29 @@
 import express from "express"
 import { fileController } from "../controllers/file"
-import formidable from "formidable"
+import multer from "multer"
+import { v4 as uuidv4 } from "uuid"
 
 const router = express.Router()
 
-router.post("/file/upload", async (req, res) => {
-  const form = formidable({
-    keepExtensions: true,
-    uploadDir: `${process.cwd()}/files`,
-    allowEmptyFiles: false
-  })
+const upload = multer({ storage: multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, `${process.cwd()}/files`)
+  }, 
 
-  form.parse(req, (err, _, files) => {
-    if (err) {
-      throw new Error(err)
-    }
+  // TODO: does this handle file names that are not url compliant?
+  filename: (req, file, cb) => {
+    cb(null, `${uuidv4()}_${file.originalname}`)
+  }
+})})
 
-    const file = files.file as formidable.File
+router.post("/file/upload", upload.single("audio"), async (req, res) => {
+  const audioFile = req.file!
 
-    res.json({
-      fileName: file.originalFilename,
-      id: file.newFilename,
-      url: `/file/${file.newFilename}`
-    })
+  res.json({
+    originalFileName: audioFile.originalname,
+    newFileName: audioFile.filename,
+    url: `http://localhost:8080/v1/file/get/${audioFile.filename}`
+  
   })
 }) 
 
