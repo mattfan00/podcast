@@ -6,6 +6,7 @@ import { createConnection } from "typeorm";
 import { User } from "./entity/User"
 import { Episode } from "./entity/Episode"
 import { Comment } from "./entity/Comment"
+import { MediaFile } from "./entity/MediaFile"
 
 const start = async () => {
   await createConnection({
@@ -15,6 +16,7 @@ const start = async () => {
       User, 
       Episode,
       Comment,
+      MediaFile,
     ],
     synchronize: true
   })
