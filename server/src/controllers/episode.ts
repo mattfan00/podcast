@@ -15,10 +15,9 @@ const findAllByUserId = async (userId: string) => {
   return foundEpisodes
 }
 
-const create = async (user: CurrentUser, title: string, description: string, url: string) => {
+const create = async (user: CurrentUser, title: string, description: string, duration: number, url: string) => {
   // TODO: get the duration of audio file
-  const durationSeconds= Math.floor(Math.random() * 1000) + 100;
-  const newEpisode = await episodeStore.create(title, description, durationSeconds, url, user.id)
+  const newEpisode = await episodeStore.create(title, description, duration, url, user.id)
 
   return newEpisode
 }

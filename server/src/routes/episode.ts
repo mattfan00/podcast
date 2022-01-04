@@ -20,8 +20,14 @@ router.get("/user/:userId/episodes", async (req, res) => {
 }) 
 
 router.post("/episode", isAuth, requireAuth, async (req, res) => {
-  const { title, description, url } = req.body
-  const episode = await episodeController.create(req.currentUser!, title, description, url)
+  const { title, description, duration, url } = req.body
+  const episode = await episodeController.create(
+    req.currentUser!, 
+    title, 
+    description, 
+    duration, 
+    url
+  )
 
   res.json(episode)
 })

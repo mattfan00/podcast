@@ -7,6 +7,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { FormField } from "../FormField"
 import { useMutation } from "react-query"
 import { useAuth } from "../../hooks/useAuth"
+import { Howl } from "howler"
 
 export const Upload: React.FC<{}> = () => {
   interface FileDetails {
@@ -18,6 +19,7 @@ export const Upload: React.FC<{}> = () => {
   interface EpisodeFields {
     title: string
     description: string
+    duration: number,
     url: string
   }
 
@@ -28,23 +30,38 @@ export const Upload: React.FC<{}> = () => {
   const [fileDetails, setFileDetails] = useState<FileDetails>()
   const inputFile = useRef<HTMLInputElement>(null)
 
+  let audioDuration = 0
+
   const handleClose = () => setShowModal(false)
 
   const handleSelectFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files![0]
 
-
-    let formData = new FormData()
-    formData.append("audio", selectedFile)
-
-    const result = await clientQuery.post<FileDetails>(`/file/upload`, formData, {
-      headers: {
-        "content-type": "multipart/form-data"
+    const audio = new Howl({
+      src: [URL.createObjectURL(selectedFile)],
+      // FIXME: cant assume its always mp3
+      format: ["mp3"],
+      onloaderror: (_, error) => {
+        console.log(error)
       }
     })
 
-    setFileDetails(result.data)
-    setShowEpisodeDetails(true)
+    audio.on("load", async () => {
+      audioDuration = audio.duration()
+
+      let formData = new FormData()
+      formData.append("audio", selectedFile)
+
+      const result = await clientQuery.post<FileDetails>(`/file/upload`, formData, {
+        headers: {
+          "content-type": "multipart/form-data"
+        }
+      })
+    
+      setFileDetails(result.data)
+      setShowEpisodeDetails(true)
+    })
+
 
     /*
     const blob = await selectedFile.arrayBuffer()
@@ -69,6 +86,7 @@ export const Upload: React.FC<{}> = () => {
     try {
       await episodeMutation.mutateAsync({
         ...data,
+        duration: audioDuration,
         url: fileDetails!.url
       })
 

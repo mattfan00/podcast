@@ -27,8 +27,11 @@ export const usePlayController = (episode: Episode | null) => {
 
     const newSound = new Howl({ 
       src: [episode.url],
-      format: ["audio/mpeg"],
       html5: true,
+    })
+
+    newSound.on("load", () => {
+      console.log(newSound.duration())
     })
 
     setSound(newSound)
