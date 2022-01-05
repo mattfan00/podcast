@@ -4,14 +4,53 @@ import { usePlayController } from "../../hooks/usePlayController"
 import { usePlayControllerStore } from "../../globalStore/usePlayControllerStore"
 import { Seeker } from "./Seeker"
 
+let intervalId: any;
+let step: number;
+
 export const PlayBar: React.FC<{}> = () => {
   const { currentEpisode, sound, isPlaying } = usePlayControllerStore()
+  const [progress, setProgress] = useState(0)
+
+  const updateProgressBar = () => {
+    // current percentage into the song
+    const currPercent = (sound!.seek() / currentEpisode!.durationSeconds) * 100;
+    console.log("percentage into song: " + currPercent)
+    console.log("seconds into song: " + sound!.seek())
+    // current second the progress bar should be showing at 
+    const currSecond = Math.round(currPercent / step)
+    console.log("seconds for progress bar: " + currSecond)
+    setProgress(currSecond)
+
+    console.log()
+  }
+
+  useEffect(() => {
+    if (isPlaying && sound && currentEpisode) { // if a sound just started playing
+      if (!intervalId) {
+        step = 100 / currentEpisode.durationSeconds
+
+        console.log(sound.seek())
+        console.log("wait for " + (1000 - (sound.seek() * 1000) % 1000))
+
+        setTimeout(() => {
+          updateProgressBar()
+          console.log("execute interval")
+          intervalId = setInterval(() => {
+            updateProgressBar()
+          }, 1000)
+        }, 1000 - (sound.seek() * 1000) % 1000)
+      } 
+    } else {
+      clearInterval(intervalId)
+      intervalId = 0
+    }
+  }, [isPlaying])
 
   const handleSeekerChange = (e: React.MouseEvent<HTMLDivElement>, value: number) => {
-    console.log("hey")
     if (currentEpisode && sound)  {
-      console.log(value)
+      setProgress(value)
       sound!.seek(value)
+      //updateProgressBar()
     }
   }
 
@@ -35,7 +74,8 @@ export const PlayBar: React.FC<{}> = () => {
 
           <Seeker
             min={0}
-            max={currentEpisode ? currentEpisode.lengthSeconds : 0}
+            max={currentEpisode ? currentEpisode.durationSeconds : 100}
+            value={progress}
             disabled={!currentEpisode && !sound}
             onChange={handleSeekerChange}
           /> 

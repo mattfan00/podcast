@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react"
 
 interface Props {
-  min?: number
+  min?: number 
   max?: number
+  value: number
   disabled?: boolean
   onChange?: (e: React.MouseEvent<HTMLDivElement>, value: number) => void
 }
@@ -10,11 +11,11 @@ interface Props {
 export const Seeker: React.FC<Props> = ({
   min = 0,
   max = 100,
+  value = 0,
   disabled = false,
   onChange,
 }) => {
   const seekerRef = useRef<HTMLDivElement | null>(null)
-  const [percent, setPercent] = useState(0)
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!disabled) { // only seek if there is an episode loaded in
@@ -26,11 +27,9 @@ export const Seeker: React.FC<Props> = ({
         const cursorLeftX = e.clientX
 
         const seekPercent = (cursorLeftX - seekerLeftX) / seekerWidth
-        const newValue = max * seekPercent
+        const newValue = ((max - min) * seekPercent) + min
 
         console.log(max, seekPercent)
-
-        setPercent(seekPercent)
 
         if (onChange) 
           onChange(e, newValue)
@@ -51,7 +50,7 @@ export const Seeker: React.FC<Props> = ({
         <div className="w-full h-1 bg-gray-400 rounded">
           <div 
             className="h-full bg-gray-200 rounded transition-all duration-200"
-            style={{width: `${percent * 100}%`}}
+            style={{width: `${((value - min) / (max - min)) * 100}%`}}
           ></div>
         </div>
       </div>
