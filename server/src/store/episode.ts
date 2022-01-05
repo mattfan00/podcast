@@ -22,7 +22,6 @@ const create = async (
   url: string,
   userId: string
 ) => {
-  console.log(durationSeconds)
   const newEpisode = Episode.create({ 
     title,
     description,

@@ -30,10 +30,6 @@ export const usePlayController = (episode: Episode | null) => {
       html5: true,
     })
 
-    newSound.on("load", () => {
-      console.log(newSound.duration())
-    })
-
     setSound(newSound)
     setIsPlaying(true)
 

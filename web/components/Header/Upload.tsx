@@ -28,9 +28,9 @@ export const Upload: React.FC<{}> = () => {
   const [showModal, setShowModal] = useState<boolean>(false)
   const [showEpisodeDetails, setShowEpisodeDetails] = useState<boolean>(false)
   const [fileDetails, setFileDetails] = useState<FileDetails>()
+  const [audioDuration, setAudioDuration] = useState(0)
   const inputFile = useRef<HTMLInputElement>(null)
 
-  let audioDuration = 0
 
   const handleClose = () => setShowModal(false)
 
@@ -47,7 +47,7 @@ export const Upload: React.FC<{}> = () => {
     })
 
     audio.on("load", async () => {
-      audioDuration = audio.duration()
+      setAudioDuration(audio.duration())
 
       let formData = new FormData()
       formData.append("audio", selectedFile)

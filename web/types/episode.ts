@@ -5,7 +5,7 @@ export interface Episode {
   title: string
   url: string
   description: string
-  lengthSeconds: number
+  durationSeconds: number
   userId: string
   user: User
   created: string

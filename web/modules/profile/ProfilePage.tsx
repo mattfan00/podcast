@@ -53,7 +53,7 @@ export const ProfilePage: React.FC<Props> = ({ profile }) => {
             isPlaying={isPlaying && currentEpisode !== null && currentEpisode.id === episode.id}
             onClick={() => usePlayController(episode)}
           />
-          <div className="text-xs text-gray-500">{dateFormat(episode.created)} · {convertDuration(episode.lengthSeconds)} min</div>
+          <div className="text-xs text-gray-500">{dateFormat(episode.created)} · {convertDuration(episode.durationSeconds)} min</div>
         </div>
       </div>
       ))}
