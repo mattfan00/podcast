@@ -5,6 +5,7 @@ import { usePlayControllerStore } from "../../globalStore/usePlayControllerStore
 import { Seeker } from "./Seeker"
 
 let intervalId: any;
+let timeoutId: any;
 let step: number;
 
 export const PlayBar: React.FC<{}> = () => {
@@ -14,14 +15,9 @@ export const PlayBar: React.FC<{}> = () => {
   const updateProgressBar = () => {
     // current percentage into the song
     const currPercent = (sound!.seek() / currentEpisode!.durationSeconds) * 100;
-    console.log("percentage into song: " + currPercent)
-    console.log("seconds into song: " + sound!.seek())
     // current second the progress bar should be showing at 
     const currSecond = Math.round(currPercent / step)
-    console.log("seconds for progress bar: " + currSecond)
     setProgress(currSecond)
-
-    console.log()
   }
 
   useEffect(() => {
@@ -29,20 +25,21 @@ export const PlayBar: React.FC<{}> = () => {
       if (!intervalId) {
         step = 100 / currentEpisode.durationSeconds
 
-        console.log(sound.seek())
-        console.log("wait for " + (1000 - (sound.seek() * 1000) % 1000))
-
-        setTimeout(() => {
-          updateProgressBar()
-          console.log("execute interval")
-          intervalId = setInterval(() => {
+        if (!timeoutId)  {
+          timeoutId = setTimeout(() => {
             updateProgressBar()
-          }, 1000)
-        }, 1000 - (sound.seek() * 1000) % 1000)
+            intervalId = setInterval(() => {
+              updateProgressBar()
+            }, 1000)
+          }, 1000 - (sound.seek() * 1000) % 1000)
+        }
       } 
     } else {
       clearInterval(intervalId)
       intervalId = 0
+
+      clearTimeout(timeoutId)
+      timeoutId = 0
     }
   }, [isPlaying])
 
@@ -50,7 +47,18 @@ export const PlayBar: React.FC<{}> = () => {
     if (currentEpisode && sound)  {
       setProgress(value)
       sound!.seek(value)
-      //updateProgressBar()
+
+      if (isPlaying) { // if the song is currently playing then create a new interval
+        clearInterval(intervalId)
+        clearTimeout(timeoutId)
+
+        timeoutId = setTimeout(() => {
+          updateProgressBar()
+          intervalId = setInterval(() => {
+            updateProgressBar()
+          }, 1000)
+        }, 1000 - (sound.seek() * 1000) % 1000)
+      }
     }
   }
 
