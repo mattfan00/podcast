@@ -15,10 +15,11 @@ export const Seeker: React.FC<Props> = ({
   disabled = false,
   onChange,
 }) => {
+  const [hover, setHover] = useState(false)
   const seekerRef = useRef<HTMLDivElement | null>(null)
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!disabled) { // only seek if there is an episode loaded in
+    if (!disabled) {
       const seekerRefDiv = seekerRef.current
 
       if (seekerRefDiv) {
@@ -29,13 +30,10 @@ export const Seeker: React.FC<Props> = ({
         const seekPercent = (cursorLeftX - seekerLeftX) / seekerWidth
         const newValue = ((max - min) * seekPercent) + min
 
-        console.log(max, seekPercent)
-
         if (onChange) 
           onChange(e, newValue)
       }
     }
-
   }
 
   return (
@@ -44,14 +42,24 @@ export const Seeker: React.FC<Props> = ({
       ref={seekerRef}
     >
       <div 
-        className="flex items-center w-full h-full" 
+        className="flex w-full h-full" 
         onClick={handleSeek}
+        onMouseEnter={() => { if (!disabled) setHover(true) }}
+        onMouseLeave={() => { if (!disabled) setHover(false) }}
       >
-        <div className="w-full h-1 bg-gray-400 rounded">
+        <div className="absolute w-full h-1 bg-gray-400 rounded top-1/2 -translate-y-1/2">
           <div 
             className="h-full bg-gray-200 rounded transition-all duration-200"
             style={{width: `${((value - min) / (max - min)) * 100}%`}}
           ></div>
+          <div
+            className="absolute top-0 w-3 h-3 -ml-1.5 bg-gray-200 rounded-full top-1/2 -translate-y-1/2 transition-all"
+            style={{
+              opacity: hover ? 1 : 0,
+              left: `${((value - min) / (max - min)) * 100}%`
+            }}
+          >
+          </div>
         </div>
       </div>
     </div>
