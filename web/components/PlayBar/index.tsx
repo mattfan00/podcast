@@ -12,12 +12,29 @@ export const PlayBar: React.FC<{}> = () => {
   const { currentEpisode, sound, isPlaying } = usePlayControllerStore()
   const [progress, setProgress] = useState(0)
 
-  const updateProgressBar = () => {
+  const updateProgressBar = (value: number, max: number, step: number) => {
     // current percentage into the song
-    const currPercent = (sound!.seek() / currentEpisode!.durationSeconds) * 100;
+    const currPercent = (value / max) * 100;
     // current second the progress bar should be showing at 
     const currSecond = Math.round(currPercent / step)
     setProgress(currSecond)
+  }
+
+  const clearAndStopInterval = () => {
+    clearInterval(intervalId)
+    intervalId = 0
+
+    clearTimeout(timeoutId)
+    timeoutId = 0
+  }
+
+  const resetAndStartInterval = () => {
+    timeoutId = setTimeout(() => {
+      updateProgressBar(sound!.seek(), currentEpisode!.durationSeconds, step)
+      intervalId = setInterval(() => {
+        updateProgressBar(sound!.seek(), currentEpisode!.durationSeconds, step)
+      }, 1000)
+    }, 1000 - (sound!.seek() * 1000) % 1000)
   }
 
   useEffect(() => {
@@ -26,38 +43,28 @@ export const PlayBar: React.FC<{}> = () => {
         step = 100 / currentEpisode.durationSeconds
 
         if (!timeoutId)  {
-          timeoutId = setTimeout(() => {
-            updateProgressBar()
-            intervalId = setInterval(() => {
-              updateProgressBar()
-            }, 1000)
-          }, 1000 - (sound.seek() * 1000) % 1000)
+          resetAndStartInterval()
         }
       } 
     } else {
-      clearInterval(intervalId)
-      intervalId = 0
-
-      clearTimeout(timeoutId)
-      timeoutId = 0
+      clearAndStopInterval()
     }
   }, [isPlaying])
 
-  const handleSeekerChange = (e: React.MouseEvent<HTMLDivElement>, value: number) => {
+  const handleSeekerChange = (e: MouseEvent, value: number) => {
     if (currentEpisode && sound)  {
-      setProgress(value)
-      sound!.seek(value)
+      if (e.type == "mouseup") { 
+        setProgress(value)
+        sound!.seek(value)
 
-      if (isPlaying) { // if the song is currently playing then create a new interval
-        clearInterval(intervalId)
-        clearTimeout(timeoutId)
-
-        timeoutId = setTimeout(() => {
-          updateProgressBar()
-          intervalId = setInterval(() => {
-            updateProgressBar()
-          }, 1000)
-        }, 1000 - (sound.seek() * 1000) % 1000)
+        if (isPlaying) { // if the song is currently playing then create a new interval
+          clearAndStopInterval()
+          resetAndStartInterval()
+        }
+      } else if (e.type == "mousemove") {
+        if (timeoutId || intervalId)
+          clearAndStopInterval()
+        setProgress(value)
       }
     }
   }

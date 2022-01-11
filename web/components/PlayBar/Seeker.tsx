@@ -5,7 +5,7 @@ interface Props {
   max?: number
   value: number
   disabled?: boolean
-  onChange?: (e: React.MouseEvent<HTMLDivElement>, value: number) => void
+  onChange?: (e: MouseEvent, value: number) => void
 }
 
 export const Seeker: React.FC<Props> = ({
@@ -16,9 +16,36 @@ export const Seeker: React.FC<Props> = ({
   onChange,
 }) => {
   const [hover, setHover] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
   const seekerRef = useRef<HTMLDivElement | null>(null)
 
-  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleDrag = (e: MouseEvent) => {
+    setIsDragging(true)
+    handleSeek(e)
+  }
+
+  const handleDragStop = (e: MouseEvent) => {
+    setIsDragging(false)
+    handleSeek(e)
+
+    window.removeEventListener("mousemove", handleDrag)
+    window.removeEventListener("mouseup", handleDragStop)
+  }
+
+  const handleMouseDown = (e: React.MouseEvent)  => {
+    if (!disabled) {
+      window.addEventListener("mousemove", handleDrag) 
+      window.addEventListener("mouseup", handleDragStop)
+    }
+  }
+
+  /*
+  const handleMouseUp = (e: React.MouseEvent) => {
+    window.removeEventListener("mousemove", handleDrag) 
+  }
+   */
+
+  const handleSeek = (e: MouseEvent) => {
     if (!disabled) {
       const seekerRefDiv = seekerRef.current
 
@@ -43,19 +70,21 @@ export const Seeker: React.FC<Props> = ({
     >
       <div 
         className="flex w-full h-full" 
-        onClick={handleSeek}
+        //onClick={handleSeek}
+        onMouseDown={handleMouseDown}
+        //onMouseUp={handleMouseUp}
         onMouseEnter={() => { if (!disabled) setHover(true) }}
         onMouseLeave={() => { if (!disabled) setHover(false) }}
       >
         <div className="absolute w-full h-1 bg-gray-400 rounded top-1/2 -translate-y-1/2">
           <div 
-            className="h-full bg-gray-200 rounded transition-all duration-200"
+            className="h-full bg-gray-200 rounded"
             style={{width: `${((value - min) / (max - min)) * 100}%`}}
           ></div>
           <div
-            className="absolute top-0 w-3 h-3 -ml-1.5 bg-gray-200 rounded-full top-1/2 -translate-y-1/2 transition-all"
+            className="absolute top-0 w-3 h-3 -ml-1.5 bg-gray-200 rounded-full top-1/2 -translate-y-1/2 transition-opacity"
             style={{
-              opacity: hover ? 1 : 0,
+              opacity: hover || isDragging ? 1 : 0,
               left: `${((value - min) / (max - min)) * 100}%`
             }}
           >
