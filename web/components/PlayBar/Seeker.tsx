@@ -28,12 +28,14 @@ export const Seeker: React.FC<Props> = ({
     setIsDragging(false)
     handleSeek(e)
 
+    document.body.classList.remove("select-none")
     window.removeEventListener("mousemove", handleDrag)
     window.removeEventListener("mouseup", handleDragStop)
   }
 
   const handleMouseDown = (e: React.MouseEvent)  => {
     if (!disabled) {
+      document.body.classList.add("select-none")
       window.addEventListener("mousemove", handleDrag) 
       window.addEventListener("mouseup", handleDragStop)
     }
