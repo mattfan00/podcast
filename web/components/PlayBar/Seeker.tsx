@@ -84,7 +84,7 @@ export const Seeker: React.FC<Props> = ({
             style={{width: `${((value - min) / (max - min)) * 100}%`}}
           ></div>
           <div
-            className="absolute top-0 w-3 h-3 -ml-1.5 bg-gray-200 rounded-full top-1/2 -translate-y-1/2 transition-opacity"
+            className="absolute w-3 h-3 -ml-1.5 bg-gray-200 rounded-full top-1/2 -translate-y-1/2 transition-opacity"
             style={{
               opacity: hover || isDragging ? 1 : 0,
               left: `${((value - min) / (max - min)) * 100}%`

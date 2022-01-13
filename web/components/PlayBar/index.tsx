@@ -74,12 +74,12 @@ export const PlayBar: React.FC<{}> = () => {
 
       <div className="w-full max-w-xl">
         <div className="flex flex-col mx-8 my-4 mt-auto bg-gray-900 rounded-lg shadow-xl pointer-events-auto"> 
-          <div className="flex items-center px-6 py-2 mb-1">
+          <div className="flex items-center px-6 mb-1">
             <div className="flex flex-col flex-1">
               <div className="font-bold text-gray-100">{currentEpisode && currentEpisode.title}</div>
-              <div className="text-xs text-gray-300">test</div>
+              <div className="text-xs text-gray-300">{currentEpisode && currentEpisode.user.name}</div>
             </div>
-            <div className="ml-2">
+            <div className="py-3 ml-2">
               <PlayButton 
                 isPlaying={isPlaying}
                 onClick={() => usePlayController(currentEpisode)}
