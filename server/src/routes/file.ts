@@ -2,9 +2,17 @@ import express from "express"
 import { fileController } from "../controllers/file"
 import multer from "multer"
 import { v4 as uuidv4 } from "uuid"
-import { mediaFileStore } from "../store/mediaFile"
+import AWS from "aws-sdk"
+import fs from "fs"
+import "dotenv/config"
 
 const router = express.Router()
+
+const s3 = new AWS.S3({
+  region: process.env.AWS_BUCKET_REGION!,
+  accessKeyId: process.env.AWS_ACCESS_KEY!,
+  secretAccessKey: process.env.AWS_SECRET_KEY!
+})
 
 const upload = multer({ storage: multer.diskStorage({
   destination: (req, file, cb) => {
@@ -20,20 +28,21 @@ const upload = multer({ storage: multer.diskStorage({
 router.post("/file/upload", upload.single("audio"), async (req, res) => {
   const audioFile = req.file!
 
-  const path = `http://localhost:8080/v1/file/get/${audioFile.filename}`
+  const s3Data = await s3.upload({
+    Bucket: process.env.AWS_BUCKET_NAME!,
+    Key: audioFile.filename,
+    Body: fs.createReadStream(audioFile.path)
+  }).promise()
 
-  await mediaFileStore.createMediaFile(
+  console.log(s3Data)
+
+  const details = fileController.upload(
     audioFile.filename,
     audioFile.originalname,
-    audioFile.size,
-    path
+    audioFile.size
   )
 
-  res.json({
-    originalFileName: audioFile.originalname,
-    newFileName: audioFile.filename,
-    url: path
-  })
+  res.json(details)
 }) 
 
 /*

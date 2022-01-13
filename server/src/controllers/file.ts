@@ -1,15 +1,24 @@
 import fs from "fs"
-import { v4 as uuidv4 } from "uuid"
+import { mediaFileStore } from "../store/mediaFile"
 
-const upload = async (fileName: string, blob: Buffer) => {
-  const id = uuidv4()
+const upload = async (
+  newFileName: string, 
+  originalFileName: string,
+  size: number,
+) => {
+  const path = `http://localhost:8080/v1/file/get/${newFileName}`
 
-  await fs.promises.appendFile(`files/${id}`, blob)
+  await mediaFileStore.createMediaFile(
+    newFileName,
+    originalFileName,
+    size,
+    path
+  )
 
   return {
-    id,
-    fileName,
-    url: `/file/get/${id}`
+    originalFileName,
+    newFileName,
+    url: path
   }
 }
 
