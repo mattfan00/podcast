@@ -11,8 +11,6 @@ export interface Config {
   JWT_ACCESS_SECRET: string
 } 
 
-export let config: Config
-
 export const initConfig = () => {
   const result = dotenv.config()
 
@@ -20,28 +18,28 @@ export const initConfig = () => {
     throw result.error
   }
 
-  if (result.parsed) {
-    const env = result.parsed
+  const env = result.parsed!
 
-    if (
-      !env.PG_CONN ||
+  if (
+    !env.PG_CONN ||
 
-      !env.AWS_BUCKET_NAME ||
-      !env.AWS_BUCKET_REGION ||
-      !env.AWS_ACCESS_KEY ||
-      !env.AWS_SECRET_KEY || 
+    !env.AWS_BUCKET_NAME ||
+    !env.AWS_BUCKET_REGION ||
+    !env.AWS_ACCESS_KEY ||
+    !env.AWS_SECRET_KEY || 
 
-      !env.JWT_ACCESS_SECRET
-    ) 
-      throw new Error("Missing environment variable(s)")
-    else 
-      config = {
-        PG_CONN: env.PG_CONN,
-        AWS_BUCKET_NAME: env.AWS_BUCKET_NAME,
-        AWS_BUCKET_REGION: env.AWS_BUCKET_REGION,
-        AWS_ACCESS_KEY: env.AWS_ACCESS_KEY, 
-        AWS_SECRET_KEY: env.AWS_SECRET_KEY,
-        JWT_ACCESS_SECRET: env.JWT_ACCESS_SECRET,
-      }
-  }
+    !env.JWT_ACCESS_SECRET
+  ) 
+    throw new Error("Missing environment variable(s)")
+  else 
+    return  {
+      PG_CONN: env.PG_CONN,
+      AWS_BUCKET_NAME: env.AWS_BUCKET_NAME,
+      AWS_BUCKET_REGION: env.AWS_BUCKET_REGION,
+      AWS_ACCESS_KEY: env.AWS_ACCESS_KEY, 
+      AWS_SECRET_KEY: env.AWS_SECRET_KEY,
+      JWT_ACCESS_SECRET: env.JWT_ACCESS_SECRET,
+    }
 }
+
+export let config: Config = initConfig()
