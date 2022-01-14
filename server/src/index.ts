@@ -6,10 +6,16 @@ import { User } from "./entity/User"
 import { Episode } from "./entity/Episode"
 import { Comment } from "./entity/Comment"
 import { MediaFile } from "./entity/MediaFile"
-import { initS3 } from "./utils/s3"
+import { s3 } from "./utils/s3"
 
 const start = async () => {
-  initS3()
+  s3.init({
+    region: config.AWS_BUCKET_REGION,
+    accessKeyId: config.AWS_ACCESS_KEY,
+    secretAccessKey: config.AWS_SECRET_KEY,
+
+    defaultBucket: config.AWS_BUCKET_NAME
+  })
 
   await createConnection({
     type: 'postgres',

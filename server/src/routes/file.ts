@@ -3,7 +3,6 @@ import { fileController } from "../controllers/file"
 import multer from "multer"
 import { v4 as uuidv4 } from "uuid"
 import { s3 } from "../utils/s3"
-import { config } from "../utils/config"
 import fs from "fs"
 
 const router = express.Router()
@@ -23,10 +22,9 @@ router.post("/file/upload", upload.single("audio"), async (req, res) => {
   const audioFile = req.file!
 
   const s3Data = await s3.upload({
-    Bucket: config.AWS_BUCKET_NAME,
-    Key: audioFile.filename,
-    Body: fs.createReadStream(audioFile.path)
-  }).promise()
+    filename: audioFile.filename,
+    body: fs.createReadStream(audioFile.path)
+  })
 
   console.log(s3Data)
 

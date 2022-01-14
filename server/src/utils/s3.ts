@@ -1,12 +1,46 @@
 import AWS from "aws-sdk"
-import { config } from "./config"
 
-export let s3 = new AWS.S3()
+interface S3Config {
+  region: string
+  accessKeyId: string
+  secretAccessKey: string
 
-export const initS3 = () => {
-  s3 = new AWS.S3({
-    region: config.AWS_BUCKET_REGION,
-    accessKeyId: config.AWS_ACCESS_KEY,
-    secretAccessKey: config.AWS_SECRET_KEY
-  })
+  defaultBucket?: string
 }
+
+interface S3UploadParams {
+  bucket?: string
+  filename: string
+  body: AWS.S3.Body
+}
+
+class S3Service { 
+  client: AWS.S3
+  defaultBucket: string
+
+  init(options: S3Config) {
+    this.client = new AWS.S3({
+      region: options.region,
+      accessKeyId: options.accessKeyId,
+      secretAccessKey: options.secretAccessKey
+    })
+
+    if (options.defaultBucket) 
+      this.defaultBucket = options.defaultBucket
+  }
+
+  upload(uploadParams: S3UploadParams) {
+    const bucket = uploadParams.bucket ? uploadParams.bucket : this.defaultBucket
+    if (!bucket) {
+      throw new Error("Error uploading file")
+    }
+
+    return this.client.upload({
+      Bucket: bucket,
+      Key: uploadParams.filename,
+      Body: uploadParams.body
+    }).promise()
+  }
+}
+
+export const s3 = new S3Service()
